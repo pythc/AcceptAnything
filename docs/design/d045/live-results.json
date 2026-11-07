@@ -1,0 +1,17 @@
+{
+  "tools": 12,
+  "transport": "official SDK stdio",
+  "run_id": "int-9ebeca89d0194c8d",
+  "collections": {
+    "requirements": 37,
+    "observations": 90,
+    "findings": 12,
+    "checks": 19,
+    "artifacts": 404
+  },
+  "gate": "inconclusive",
+  "evidence_bytes": 219700,
+  "evidence_sha256": "357474a970a83b51e4a242520a4311be6714bee2ba3365f814e7c230c6c2bec0",
+  "finding_history_read": true,
+  "mutations": false
+}

@@ -1,0 +1,55 @@
+{
+  "id": "integration-positive-v1",
+  "name": "正向校准 · 全部满足门禁",
+  "repository": "/Users/alex/Documents/ChatGPT/竞赛/integrations/fixtures/positive",
+  "version": "D014",
+  "environment": "Linux Docker / synthetic positive control",
+  "scope": "校验真实执行后可以得到 allow；不是产品验收",
+  "files": [
+    "test_contract.py",
+    "control.test.mjs",
+    "control.robot"
+  ],
+  "tasks": [
+    {
+      "id": "python",
+      "tool": "pytest",
+      "target": "test_contract.py"
+    },
+    {
+      "id": "node",
+      "tool": "node-test",
+      "target": "control.test.mjs"
+    },
+    {
+      "id": "robot",
+      "tool": "robot",
+      "target": "control.robot"
+    }
+  ],
+  "rules": [
+    {
+      "id": "no-failures",
+      "kind": "metric",
+      "tasks": [
+        "python",
+        "node",
+        "robot"
+      ],
+      "metric": "tests.failed",
+      "threshold": 0
+    },
+    {
+      "id": "minimum-tests",
+      "kind": "metric",
+      "tasks": [
+        "python",
+        "node",
+        "robot"
+      ],
+      "metric": "tests.total",
+      "operator": "ge",
+      "threshold": 3
+    }
+  ]
+}

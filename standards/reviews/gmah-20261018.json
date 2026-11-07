@@ -1,0 +1,21 @@
+{
+  "snapshot_digest": "442479e031d31797b268372b41f9faa009e49800453caacc5378bdae3d6aadb3",
+  "entries": [
+    {
+      "match": {"tool": "gmah-build", "kind": "test", "name": "production_typescript_build"},
+      "state": "confirmed",
+      "detail_contains": ["TS2322", "src/pages/Logs.tsx(73,9)"],
+      "sources": {"web/src/pages/Logs.tsx": "41a4c800e5f87b6d7256cbb254c949ff39e531dab1e03ffc4d07ba206e3cbfb2", "web/package.json": "455442d550ed667d2fdbc62b2f213ab27464e9b07ef283b6c0530ee795ad549a"},
+      "reason": "真实生产构建执行了原 npm run build，tsc -b 在 Logs.tsx:73 报 TS2322；源码把 event.type as string 赋给限定联合类型。确认生产构建缺陷；不代表安全可利用性结论。",
+      "evidence": [{"kind": "validation", "description": "本次原始构建 JUnit 与编译器诊断；此前独立验收同位置复现。"}]
+    },
+    {
+      "match": {"tool": "gmah-regression", "kind": "test", "name": "test_agentic_repository_reviewer_runs_model_tool_loop"},
+      "state": "test_issue",
+      "detail_contains": ["IndexError: pop from empty list", "fake_client = FakeToolLoopChatClient()"],
+      "sources": {"tests/test_repository_agent.py": "83f3b645b18664b2e1fa52eafdeb8aa88465b349c5ebac936d0331f5841363c0", "src/agent_workflow/evaluation/repository_agent.py": "58a60217c4b2e852be9abd757145f124035c062f897bd45643e7a11bbba36c29"},
+      "reason": "测试假客户端只预置5条回复，缺少当前流程要求的历史查询/更新与工具调用，responses.pop(0) 耗尽。原测试失败保留为用例问题并继续阻断，不能推断真实模型同样失败。",
+      "evidence": [{"kind": "static_review", "description": "test_repository_agent.py:12-27 对照 repository_agent.py:350-370 的 final_answer 前提逐项核对。"}]
+    }
+  ]
+}

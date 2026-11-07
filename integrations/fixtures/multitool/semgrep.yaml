@@ -1,0 +1,6 @@
+rules:
+  - id: python-eval
+    languages: [python]
+    severity: ERROR
+    message: Untrusted input must not reach eval
+    pattern: eval(...)

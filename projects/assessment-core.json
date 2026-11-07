@@ -1,0 +1,60 @@
+{
+  "id": "assessment-core",
+  "name": "110lab 考核系统 · 业务规则回归",
+  "repository": "/Users/alex/Documents/Codex/2026-09-13/geng/work/110lab-assessment",
+  "version": "assessment-rules-v1",
+  "files": [
+    "package.json",
+    "client/package.json",
+    "docs/CONTRACT.md",
+    "client/src/lib/format.ts",
+    "client/src/lib/exam.ts",
+    "client/src/types.ts",
+    "client/tests/duration.test.mjs",
+    "tests/exam-status.test.ts"
+  ],
+  "source_path": "docs/CONTRACT.md",
+  "source_digest": "08a0ed9d277299d457566f3372e14ebf90f142530d78809dbcc75c7072676560",
+  "criteria": [
+    {
+      "id": "EXAM-DURATION",
+      "title": "考试时长与开考窗口",
+      "expected": "24/48 小时时长保持一致；开考窗口边界、北京时区与倒计时计算符合已有契约",
+      "test_file": "client/tests/duration.test.mjs",
+      "test_digest": "5e2ab37215209360fa9bdc443608da28ebc88aac0731c918f9452024a5f0b8bf",
+      "test_names": [
+        "remaining time keeps hours above 24 instead of wrapping",
+        "the start window is open at the open instant and closed at the close instant",
+        "timestamps render as Beijing time",
+        "duration reads stay exact and never fall back to 24",
+        "start is allowed only for a confirmed 24 or 48 hour duration inside the window",
+        "future open batches can be enrolled while start stays closed until the window",
+        "description warnings detect explicit 24 or 48 hour wording without rewriting it",
+        "Beijing date input has a stable UTC instant and rejects normalized invalid dates",
+        "central enrollment normalization retains the captured duration without a fallback"
+      ],
+      "source_anchor": "docs/CONTRACT.md:13；前端规则范围"
+    },
+    {
+      "id": "EXAM-FINALIZE",
+      "title": "交卷条件与截止状态",
+      "expected": "材料与仓库版本一致且考试有效时允许交卷；缺件、版本冲突、截止或已交卷时不得显示可交卷状态",
+      "test_file": "tests/exam-status.test.ts",
+      "test_digest": "6ee94800365db31490b3a9e7187a6ff5bc943e9d181b18d8ff01772009c6d524",
+      "test_names": [
+        "Missing repository blocks finalization without reporting a version conflict",
+        "Missing materials blocks finalization without reporting a version conflict",
+        "Missing both submissions blocks finalization without reporting a version conflict",
+        "Matching submissions permit finalization while the exam is active",
+        "A real repository/material version conflict remains visible and blocks finalization",
+        "finalized does not expose an active exam or permit finalization",
+        "final receipt received before state refresh does not expose an active exam or permit finalization",
+        "expired does not expose an active exam or permit finalization",
+        "exact deadline does not expose an active exam or permit finalization",
+        "past deadline does not expose an active exam or permit finalization",
+        "not started does not expose an active exam or permit finalization"
+      ],
+      "source_anchor": "docs/CONTRACT.md:13；仅前端判定，不代表服务端写入授权"
+    }
+  ]
+}

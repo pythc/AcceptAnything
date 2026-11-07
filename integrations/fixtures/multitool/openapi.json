@@ -1,0 +1,1 @@
+{"openapi":"3.0.3","info":{"title":"Integration fixture","version":"1"},"paths":{"/hello":{"get":{"responses":{"200":{"description":"ok"}}}}}}

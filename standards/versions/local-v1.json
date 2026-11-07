@@ -1,0 +1,103 @@
+{
+  "version": "local-v1",
+  "title": "本地夹具验收标准",
+  "source": "独立需求与权限矩阵 · 研究基线",
+  "scope": "八项本地验收；性能与恢复不在本基线放行范围",
+  "suite_digest": "4b67830b8730e15fcab3024d216da1cccf5db4b9ed0779feb2751bd03cc9e061",
+  "fixture_digest": "e67923fd39565ed363b1062a30c342977b54d07f03fcf4e561758783bb91e829",
+  "policy_digest": "167bd6b66cdc78f51d54deed25ce536d4f3710d2d5d369b8d6728f02e3c28eca",
+  "sample_digests": {
+    "buggy": "2d957fa6c76d8f32da8927962ddfabc7b7e3f533a8e45bc7e8ee7a84566b0ff4",
+    "fixed": "15d683021a9b14d375160628bbb2f4e456e91328aab29313b6348eda0a524f2c"
+  },
+  "criteria": [
+    {
+      "id": "SEC-SHELL",
+      "case_id": "TC-STATIC-01",
+      "layer": "L1",
+      "executor": "bandit",
+      "title": "存在风险的 Shell 调用",
+      "severity": "high",
+      "expected": "不使用存在注入风险的 shell=True 调用",
+      "impact": "命令执行路径存在注入风险。",
+      "required": true
+    },
+    {
+      "id": "REQ-HEALTH",
+      "case_id": "TC-HEALTH-01",
+      "layer": "L2",
+      "executor": "playwright",
+      "title": "服务健康检查",
+      "severity": "low",
+      "expected": "健康检查返回 200",
+      "impact": "服务无法访问。",
+      "required": true
+    },
+    {
+      "id": "SEC-IDOR",
+      "case_id": "TC-AUTH-02",
+      "layer": "L2",
+      "executor": "playwright",
+      "title": "跨用户读取私有文档",
+      "severity": "high",
+      "expected": "Alice 读取 Bob 的私有文档应返回 403",
+      "impact": "用户数据隔离失效，阻断本次交付。",
+      "required": true
+    },
+    {
+      "id": "SEC-SESSION",
+      "case_id": "TC-AUTH-03",
+      "layer": "L2",
+      "executor": "playwright",
+      "title": "退出后旧会话仍可访问",
+      "severity": "high",
+      "expected": "退出后，旧 Token 访问 /api/me 返回 401",
+      "impact": "退出会话不能失效，存在未授权访问风险。",
+      "required": true
+    },
+    {
+      "id": "REQ-IDEMPOTENCY",
+      "case_id": "TC-ORDER-01",
+      "layer": "L2",
+      "executor": "playwright",
+      "title": "重复提交创建多笔订单",
+      "severity": "medium",
+      "expected": "相同幂等键返回相同订单 ID",
+      "impact": "重复操作可能造成重复业务记录。",
+      "required": true
+    },
+    {
+      "id": "REQ-CONTRACT",
+      "case_id": "TC-CONTRACT-01",
+      "layer": "L2",
+      "executor": "playwright",
+      "title": "接口字段类型不符合契约",
+      "severity": "medium",
+      "expected": "count 必须为 number",
+      "impact": "调用方依赖的接口契约不满足。",
+      "required": true
+    },
+    {
+      "id": "REQ-PERSIST",
+      "case_id": "TC-NOTE-01",
+      "layer": "L3",
+      "executor": "playwright",
+      "title": "保存成功但刷新后数据丢失",
+      "severity": "medium",
+      "expected": "保存后刷新页面仍能读取原文",
+      "impact": "保存反馈与实际存储不一致，用户数据丢失。",
+      "required": true
+    },
+    {
+      "id": "A11Y-LABEL",
+      "case_id": "TC-A11Y-01",
+      "layer": "L3",
+      "executor": "playwright",
+      "title": "输入框缺少可访问名称",
+      "severity": "medium",
+      "expected": "表单输入框通过 axe label 规则",
+      "impact": "依赖辅助技术的用户难以识别输入框。",
+      "required": true
+    }
+  ]
+}

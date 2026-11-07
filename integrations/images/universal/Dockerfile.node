@@ -1,0 +1,3 @@
+ARG NODE_IMAGE
+FROM ${NODE_IMAGE}
+RUN apk add --no-cache python3 make g++ git && npm install --prefix /opt/acceptance-loader --ignore-scripts tsx@4.21.0

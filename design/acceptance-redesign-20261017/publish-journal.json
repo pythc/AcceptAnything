@@ -1,0 +1,92 @@
+{
+  "frontend-redesign-d016": {
+    "requestId": "f5df5a41-e119-4626-9c8f-44a2e5426802",
+    "state": "succeeded",
+    "operationId": "a3daf117-be74-47bc-8253-88b53f09c95b"
+  },
+  "d016-upload-01-石墨流水线.png": {
+    "requestId": "fc50b718-ef9a-4d1d-9c74-308b55b16f89",
+    "ticketId": "0e7c8cff-a92e-4915-91a7-510445f6cc3d",
+    "receipt": {
+      "url": "/api/files/01a1488e-4558-779b-9e94-571e1663552b/01-%E7%9F%B3%E5%A2%A8%E6%B5%81%E6%B0%B4%E7%BA%BF.png",
+      "size": 1503671,
+      "state": "succeeded",
+      "pageId": "01a1488e-3ff8-7d12-ae9f-91684f879d20",
+      "fileName": "01-石墨流水线.png",
+      "attachmentId": "01a1488e-4558-779b-9e94-571e1663552b"
+    },
+    "metadataVerified": true,
+    "sha256": "0f9a6dd88d5d6914a094b5d277056da490c094be5d57ec4d625e132427d52a91"
+  },
+  "d016-upload-02-明净审阅台.png": {
+    "requestId": "4677808d-9d3a-494b-97a4-5029771c2e20",
+    "ticketId": "49b3313b-9769-4d7f-905b-fa7708bc0909",
+    "receipt": {
+      "url": "/api/files/01a1488e-49c7-77c8-af73-f172c3de007a/02-%E6%98%8E%E5%87%80%E5%AE%A1%E9%98%85%E5%8F%B0.png",
+      "size": 1314031,
+      "state": "succeeded",
+      "pageId": "01a1488e-3ff8-7d12-ae9f-91684f879d20",
+      "fileName": "02-明净审阅台.png",
+      "attachmentId": "01a1488e-49c7-77c8-af73-f172c3de007a"
+    },
+    "metadataVerified": true,
+    "sha256": "fb41b3668c3edf9a79ecf22d4070236f727858924b08651fc282e1de6e7fc52b"
+  },
+  "d016-upload-03-横向工程控制台.png": {
+    "requestId": "bd34b849-69a6-4837-81a9-139846869a17",
+    "ticketId": "03526817-2676-4541-a2e5-76476e1f296c",
+    "receipt": {
+      "url": "/api/files/01a1488e-4e5c-70bb-a736-626ec754d84b/03-%E6%A8%AA%E5%90%91%E5%B7%A5%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%8F%B0.png",
+      "size": 1538404,
+      "state": "succeeded",
+      "pageId": "01a1488e-3ff8-7d12-ae9f-91684f879d20",
+      "fileName": "03-横向工程控制台.png",
+      "attachmentId": "01a1488e-4e5c-70bb-a736-626ec754d84b"
+    },
+    "metadataVerified": true,
+    "sha256": "bfb579ab48598f012c9f365e168b5dae99a35608f803100af57d4155db600dca"
+  },
+  "d016-upload-source-flow.jpg": {
+    "requestId": "fa782dad-f87e-4134-ba39-3027ca43a53e",
+    "ticketId": "4a2f8707-bef2-42f0-ad2b-63196d6dec5a",
+    "receipt": {
+      "url": "/api/files/01a1488e-5162-72d6-843c-53b8263294b7/source-flow.jpg",
+      "size": 44964,
+      "state": "succeeded",
+      "pageId": "01a1488e-3ff8-7d12-ae9f-91684f879d20",
+      "fileName": "source-flow.jpg",
+      "attachmentId": "01a1488e-5162-72d6-843c-53b8263294b7"
+    },
+    "metadataVerified": true,
+    "sha256": "965382baccfc4c6fb9eae3856d7bfb2f4cb1ffa845e8ef68499d4f6b376f74d8"
+  },
+  "d016-upload-source-findings.jpg": {
+    "requestId": "c0953fcf-c23b-4c91-af7b-27f57cbafe7b",
+    "ticketId": "81a9b91e-812b-4c70-b3a5-9ecb5fc877e6",
+    "receipt": {
+      "url": "/api/files/01a1488e-5459-7679-90f6-9008872010c2/source-findings.jpg",
+      "size": 46693,
+      "state": "succeeded",
+      "pageId": "01a1488e-3ff8-7d12-ae9f-91684f879d20",
+      "fileName": "source-findings.jpg",
+      "attachmentId": "01a1488e-5459-7679-90f6-9008872010c2"
+    },
+    "metadataVerified": true,
+    "sha256": "872af5192a661c95b71d5a5210b1b54decb625241174783bf6c2824efaac9f2b"
+  },
+  "d016-images": {
+    "requestId": "433b33c6-f0ad-414e-9c3b-61edd1ccf116",
+    "state": "succeeded",
+    "operationId": "67c62d2e-44b1-4aa3-8685-c358e495478d"
+  },
+  "d016-history": {
+    "requestId": "bf5d3b96-3733-4de3-aa3c-60cb6139b334",
+    "state": "succeeded",
+    "operationId": "ad8807d9-a118-4424-9a32-8f669407c8ee"
+  },
+  "d016-design": {
+    "requestId": "518fea81-8781-4bdc-bd78-b9030d43c5e7",
+    "state": "succeeded",
+    "operationId": "fe63fbc2-2076-4beb-b64e-c09635b1f4b0"
+  }
+}

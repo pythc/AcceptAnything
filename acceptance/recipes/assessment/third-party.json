@@ -1,0 +1,6 @@
+{
+  "semgrep": {"version": "1.180.0", "mode": "CE offline, metrics off", "rules_source": "https://github.com/ajinabraham/njsscan/tree/4137df39e743e07e912a31ca7dab19633f40324a/njsscan/rules/semantic_grep", "rules_count": 114, "rules_license": "LGPL-3.0", "modifications": "Flattened 68 YAML rule files into JSON; added TypeScript to rules declaring JavaScript. Original rule identifiers and content preserved."},
+  "bandit": {"version": "1.9.4", "scope": "All frozen Python files; default rules"},
+  "zap": {"version": "2.17.0", "scope": "Disposable local app, no external network, active/passive scan within recorded time limits"},
+  "k6": {"version": "2.3.0", "scope": "5 VUs, 20s, >=20 iterations, health and database-backed batch list; zero errors, latency measured"}
+}

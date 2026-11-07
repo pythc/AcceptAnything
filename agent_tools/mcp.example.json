@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "acceptanything": {
+      "command": "/absolute/path/AcceptAnything/.venv-agent/bin/python",
+      "args": [
+        "/absolute/path/AcceptAnything/scripts/acceptanything_mcp.py",
+        "--backend", "http://127.0.0.1:18890",
+        "--journal", "/absolute/path/private-state/acceptanything-operations.sqlite3"
+      ]
+    }
+  }
+}

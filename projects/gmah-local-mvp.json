@@ -1,0 +1,801 @@
+{
+  "schema_version": 1,
+  "documents": [
+    {
+      "id": "README",
+      "path": "README.md",
+      "title": "GMAH 公开审批功能",
+      "anchor": "#审批",
+      "excerpt": "- 审批：查看 pending approval，并批准或拒绝。"
+    }
+  ],
+  "specification": {
+    "title": "GMAH 本地 MVP 业务验收",
+    "scope": "GMAH 本地 MVP：模型设计审批接口和页面用例，生产构建、仓库回归、代码及依赖扫描，会话负载和 Redis/PostgreSQL 重启恢复；外部模型、QQ、远程 MCP 与真实批改系统不在本次范围。",
+    "environment": {
+      "mode": "service",
+      "runtime": "python",
+      "entrypoint": "src/agent_workflow/api/app.py",
+      "port": 19300,
+      "ready_path": "/healthz",
+      "recipe": "gmah-v1"
+    },
+    "requirements": [
+      {
+        "id": "APPROVAL-API",
+        "title": "人工审批接口流程",
+        "source": "README",
+        "quote": "- 审批：查看 pending approval，并批准或拒绝。",
+        "priority": "P2",
+        "disposition": "required",
+        "reason": "",
+        "scenarios": [
+          {
+            "id": "M-1900252adcaf",
+            "title": "最低分数边界下批准审批",
+            "dimension": "boundary",
+            "engine": "api",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "user_id": "${run_id}",
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "tool_name": "publish_grade",
+                    "arguments": {
+                      "submission_id": "submission-1",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "feedback_markdown": "${feedback}"
+                    }
+                  }
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "thread": "/thread_id",
+                  "approval": "/pending_approval/approval_id"
+                }
+              },
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/approvals/${approval}/decide",
+                "body": {
+                  "approved_by": "验收复核员",
+                  "approved": "${approved}",
+                  "reason": "验收验证"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/state/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "score": 0,
+                "feedback": "评分为零，审核后批准。",
+                "approved": true,
+                "expected": "approved"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          },
+          {
+            "id": "M-874d635f9f79",
+            "title": "最高分数边界下拒绝审批",
+            "dimension": "boundary",
+            "engine": "api",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "user_id": "${run_id}",
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "tool_name": "publish_grade",
+                    "arguments": {
+                      "submission_id": "submission-1",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "feedback_markdown": "${feedback}"
+                    }
+                  }
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "thread": "/thread_id",
+                  "approval": "/pending_approval/approval_id"
+                }
+              },
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/approvals/${approval}/decide",
+                "body": {
+                  "approved_by": "验收复核员",
+                  "approved": "${approved}",
+                  "reason": "验收验证"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/state/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "score": 100,
+                "feedback": "评分为满分，审核后拒绝。",
+                "approved": false,
+                "expected": "rejected"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          },
+          {
+            "id": "M-f9ae198859d4",
+            "title": "常规分数下批准审批",
+            "dimension": "normal",
+            "engine": "api",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "user_id": "${run_id}",
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "tool_name": "publish_grade",
+                    "arguments": {
+                      "submission_id": "submission-1",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "feedback_markdown": "${feedback}"
+                    }
+                  }
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "thread": "/thread_id",
+                  "approval": "/pending_approval/approval_id"
+                }
+              },
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/approvals/${approval}/decide",
+                "body": {
+                  "approved_by": "验收复核员",
+                  "approved": "${approved}",
+                  "reason": "验收验证"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/state/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "score": 60,
+                "feedback": "审核材料完整，符合要求，予以批准。",
+                "approved": true,
+                "expected": "approved"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          },
+          {
+            "id": "M-80dfc3dd3dc1",
+            "title": "常规分数下拒绝审批",
+            "dimension": "normal",
+            "engine": "api",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "user_id": "${run_id}",
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "tool_name": "publish_grade",
+                    "arguments": {
+                      "submission_id": "submission-1",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "feedback_markdown": "${feedback}"
+                    }
+                  }
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "thread": "/thread_id",
+                  "approval": "/pending_approval/approval_id"
+                }
+              },
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/approvals/${approval}/decide",
+                "body": {
+                  "approved_by": "验收复核员",
+                  "approved": "${approved}",
+                  "reason": "验收验证"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/state/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "score": 40,
+                "feedback": "审核后发现不符合要求，拒绝本次审批。",
+                "approved": false,
+                "expected": "rejected"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          }
+        ]
+      },
+      {
+        "id": "APPROVAL-BROWSER",
+        "title": "人工审批浏览器流程",
+        "source": "README",
+        "quote": "- 审批：查看 pending approval，并批准或拒绝。",
+        "priority": "P2",
+        "disposition": "required",
+        "reason": "",
+        "scenarios": [
+          {
+            "id": "M-f2c9a922eda8",
+            "title": "正常分数下批准审批",
+            "dimension": "normal",
+            "engine": "browser",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "arguments": {
+                      "feedback_markdown": "${feedback}",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "submission_id": "submission-1"
+                    },
+                    "tool_name": "publish_grade"
+                  },
+                  "user_id": "${run_id}"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "approval": "/pending_approval/approval_id",
+                  "thread": "/thread_id"
+                }
+              },
+              {
+                "kind": "goto",
+                "selector": "",
+                "value": "/"
+              },
+              {
+                "kind": "click",
+                "selector": "li[role=\"menuitem\"]:has-text(\"审批\")",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "tr:has-text(\"${approval}\")",
+                "value": ""
+              },
+              {
+                "kind": "click",
+                "selector": "tr:has-text(\"${approval}\") >> xpath=.//button[translate(normalize-space(.), \" \", \"\")=\"${action}\"]",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "[role=\"alert\"]:has-text(\"已${action}\")",
+                "value": ""
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "action": "批准",
+                "feedback": "请根据评分结果进行审批。",
+                "score": 50,
+                "expected": "approved"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          },
+          {
+            "id": "M-69bc90e994a3",
+            "title": "正常分数下拒绝审批",
+            "dimension": "normal",
+            "engine": "browser",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "arguments": {
+                      "feedback_markdown": "${feedback}",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "submission_id": "submission-1"
+                    },
+                    "tool_name": "publish_grade"
+                  },
+                  "user_id": "${run_id}"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "approval": "/pending_approval/approval_id",
+                  "thread": "/thread_id"
+                }
+              },
+              {
+                "kind": "goto",
+                "selector": "",
+                "value": "/"
+              },
+              {
+                "kind": "click",
+                "selector": "li[role=\"menuitem\"]:has-text(\"审批\")",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "tr:has-text(\"${approval}\")",
+                "value": ""
+              },
+              {
+                "kind": "click",
+                "selector": "tr:has-text(\"${approval}\") >> xpath=.//button[translate(normalize-space(.), \" \", \"\")=\"${action}\"]",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "[role=\"alert\"]:has-text(\"已${action}\")",
+                "value": ""
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "action": "拒绝",
+                "feedback": "本次评分结果不予通过。",
+                "score": 50,
+                "expected": "rejected"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          },
+          {
+            "id": "M-45ece79257f5",
+            "title": "最低分数边界下批准审批",
+            "dimension": "boundary",
+            "engine": "browser",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "arguments": {
+                      "feedback_markdown": "${feedback}",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "submission_id": "submission-1"
+                    },
+                    "tool_name": "publish_grade"
+                  },
+                  "user_id": "${run_id}"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "approval": "/pending_approval/approval_id",
+                  "thread": "/thread_id"
+                }
+              },
+              {
+                "kind": "goto",
+                "selector": "",
+                "value": "/"
+              },
+              {
+                "kind": "click",
+                "selector": "li[role=\"menuitem\"]:has-text(\"审批\")",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "tr:has-text(\"${approval}\")",
+                "value": ""
+              },
+              {
+                "kind": "click",
+                "selector": "tr:has-text(\"${approval}\") >> xpath=.//button[translate(normalize-space(.), \" \", \"\")=\"${action}\"]",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "[role=\"alert\"]:has-text(\"已${action}\")",
+                "value": ""
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "action": "批准",
+                "feedback": "最低分数边界下确认批准。",
+                "score": 0,
+                "expected": "approved"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          },
+          {
+            "id": "M-b8a900e4c6d5",
+            "title": "最高分数边界下拒绝审批",
+            "dimension": "boundary",
+            "engine": "browser",
+            "steps": [
+              {
+                "kind": "http",
+                "method": "POST",
+                "path": "/sessions/run",
+                "body": {
+                  "message": "${feedback}",
+                  "tool_call": {
+                    "arguments": {
+                      "feedback_markdown": "${feedback}",
+                      "rubric_version": "v1",
+                      "score": "${score}",
+                      "submission_id": "submission-1"
+                    },
+                    "tool_name": "publish_grade"
+                  },
+                  "user_id": "${run_id}"
+                },
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_required",
+                    "operator": "equals",
+                    "value": true
+                  },
+                  {
+                    "pointer": "/tool_result",
+                    "operator": "equals",
+                    "value": null
+                  }
+                ],
+                "capture": {
+                  "approval": "/pending_approval/approval_id",
+                  "thread": "/thread_id"
+                }
+              },
+              {
+                "kind": "goto",
+                "selector": "",
+                "value": "/"
+              },
+              {
+                "kind": "click",
+                "selector": "li[role=\"menuitem\"]:has-text(\"审批\")",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "tr:has-text(\"${approval}\")",
+                "value": ""
+              },
+              {
+                "kind": "click",
+                "selector": "tr:has-text(\"${approval}\") >> xpath=.//button[translate(normalize-space(.), \" \", \"\")=\"${action}\"]",
+                "value": ""
+              },
+              {
+                "kind": "expect_visible",
+                "selector": "[role=\"alert\"]:has-text(\"已${action}\")",
+                "value": ""
+              },
+              {
+                "kind": "http",
+                "method": "GET",
+                "path": "/sessions/${thread}",
+                "body": null,
+                "headers": {},
+                "status": 200,
+                "assertions": [
+                  {
+                    "pointer": "/approval_status",
+                    "operator": "equals",
+                    "value": "${expected}"
+                  }
+                ],
+                "capture": {}
+              }
+            ],
+            "examples": [
+              {
+                "action": "拒绝",
+                "feedback": "最高分数边界下确认拒绝。",
+                "score": 100,
+                "expected": "rejected"
+              }
+            ],
+            "matrix": {},
+            "boundary": null,
+            "contract": null
+          }
+        ]
+      }
+    ]
+  },
+  "draft_ids": [
+    "draft-f213f68d585d44cc",
+    "draft-c2aef374e9164908"
+  ],
+  "include_scanners": true
+}

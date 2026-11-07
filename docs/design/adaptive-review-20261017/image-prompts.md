@@ -1,0 +1,69 @@
+# Lemma 自主评审路径 · 生成提示
+
+日期：2026-10-17。使用内置 Image Gen，共三张独立界面；它们是同一流程的三个时刻。每次附原产品截图，后两张另附首张生成图维持一致性。预览用途，未实现功能。原文、页码、步骤及结论仅作界面示例，不是论文事实核验。
+
+## 从阅读开始
+
+```text
+Use case: ui-mockup. Create a realistic production-quality Chinese desktop web application screen, 1600 x 1080, full app content edge to edge with no browser chrome, device mockup or presentation border. Product Lemma, mathematical paper review. This is a prospective design concept, NOT actual review evidence. Put a small visible label “交互示意 · 非真实评审结果” in top app header in dark muted text. Date anchor 2026-10-17; do not invent relative calendar dates.
+REFERENCE IMAGES: existing actual Lemma UI screenshot. Preserve the restrained academic product feel, burgundy serif Lemma wordmark and Zotero-inspired PDF reader. The supplied fixed-lane graph is the thing to REPLACE, not copy. Do NOT reproduce browser chrome/sidebar. Keep reader on LEFT, adaptive actual execution graph on RIGHT. No permanent left navigation rail.
+Visual system: warm ivory background #FAF9F7, white paper, text #28222A, readable secondary #61505B, burgundy #873749 active accent, connector #927782, muted dark green completed #40654F and amber #8A591F needs-attention. Body UI type 15-16px, node titles 17-18px, no tiny pale text. Chinese clean sans, academic paper serif. Crisp thin separators, sparse borders only for standalone graph nodes, no nested cards, no excessive shadows, no gradients, no cartoon avatars, no dashboard stats.
+Persistent app header 70px: Lemma left, shortened paper title “Bolzano–Weierstrass 定理” beside divider, right “论文库” and “上传论文”. Under header the left PDF region toolbar “目录”, page x / 5, search icon, zoom, fit, “框选批注”; graceful PDF page showing the real source title “A Short and Educational Proof of the Bolzano–Weierstrass Theorem”, authors “Faruk Aktan, Mehmet Vural” or relevant interior generic math typeset text. No invented verbatim quotations or critical accusations about this paper; all workflow finding copy is illustrative and visibly labeled as sample. Reader stays a real scholarly PDF with readable equations, large white margins. Do not label or number alternative options.
+Critical interaction: this graph grows from actual discrete executed actions and explicit next decisions. Nodes are concrete actions, agents are small metadata. No fixed stages 01-05, no mandatory three role lanes, no full agent roster, no future grand plan, no global percent, no guessed ETA. Every completed node means task completed, not theorem proved. High level decision rationale is short, not hidden internal chain of thought. Preserve human confirmation before semantic approval and separate result reveal “确定，查看结果”.
+Each result must be ONE single coherent screen, not multiple screens, no collage. Intentional whitespace, beautiful legible typography, thin visible directional connectors, short content.
+SCREEN NAME: “从阅读开始”. State: first moments of adaptive review, before any math result or AI annotations are revealed. Layout LEFT 60% width PDF reader page1, RIGHT40% width full height light workflow panel.
+Right panel title “评审路径” with discreet expand icon, current human-readable status heading “正在确认主要结论”, secondary “全文已读取，先确定需要核查的命题。” and activity text “原文理解 Agent 正在工作” with simple burgundy spinner.
+Graph starting near top-third: one slim completed node “论文已导入” subtitle “5 页 · 原文版本已固定”; connected downward to completed node “阅读全文与定位论证” subtitle “原文理解 Agent · 已完成”; connected downward to one ACTIVE taller node burgundy left accent and spinner “提取核心命题与假设” subtitle “原文理解 Agent · 正在执行”; within active node a single short explanation “先核对结论、条件与定义，再决定如何验证。”
+End of graph beneath active node is just a short connector fading into an open hollow dot with label “下一步将根据本步结果决定”. DO NOT create a boxed future task, Lean, branches or a predetermined final node. Large clean whitespace below, reinforcing future unknown.
+At bottom of panel a small fixed live activity line “刚刚 · 已读到全文结尾，开始整理命题” and minimal text button “暂停评审”. No result tabs yet. On PDF no generated review annotations yet.
+This screen should make it self-evident that reading occurs before a dynamic plan grows. Restrained visual polish, realistic app, no marketing prose.
+```
+
+## 路径随发现生长
+
+```text
+Use case: ui-mockup. Create a realistic production-quality Chinese desktop web application screen, 1600 x 1080, full app content edge to edge with no browser chrome, device mockup or presentation border. Product Lemma, mathematical paper review. This is a prospective design concept, NOT actual review evidence. Put a small visible label “交互示意 · 非真实评审结果” in top app header in dark muted text. Date anchor 2026-10-17; do not invent relative calendar dates.
+REFERENCE IMAGES: existing actual Lemma UI screenshot. Preserve the restrained academic product feel, burgundy serif Lemma wordmark and Zotero-inspired PDF reader. The supplied fixed-lane graph is the thing to REPLACE, not copy. Do NOT reproduce browser chrome/sidebar. Keep reader on LEFT, adaptive actual execution graph on RIGHT. No permanent left navigation rail.
+Visual system: warm ivory background #FAF9F7, white paper, text #28222A, readable secondary #61505B, burgundy #873749 active accent, connector #927782, muted dark green completed #40654F and amber #8A591F needs-attention. Body UI type 15-16px, node titles 17-18px, no tiny pale text. Chinese clean sans, academic paper serif. Crisp thin separators, sparse borders only for standalone graph nodes, no nested cards, no excessive shadows, no gradients, no cartoon avatars, no dashboard stats.
+Persistent app header 70px: Lemma left, shortened paper title “Bolzano–Weierstrass 定理” beside divider, right “论文库” and “上传论文”. Under header the left PDF region toolbar “目录”, page x / 5, search icon, zoom, fit, “框选批注”; graceful PDF page showing the real source title “A Short and Educational Proof of the Bolzano–Weierstrass Theorem”, authors “Faruk Aktan, Mehmet Vural” or relevant interior generic math typeset text. No invented verbatim quotations or critical accusations about this paper; all workflow finding copy is illustrative and visibly labeled as sample. Reader stays a real scholarly PDF with readable equations, large white margins. Do not label or number alternative options.
+Critical interaction: this graph grows from actual discrete executed actions and explicit next decisions. Nodes are concrete actions, agents are small metadata. No fixed stages 01-05, no mandatory three role lanes, no full agent roster, no future grand plan, no global percent, no guessed ETA. Every completed node means task completed, not theorem proved. High level decision rationale is short, not hidden internal chain of thought. Preserve human confirmation before semantic approval and separate result reveal “确定，查看结果”.
+Each result must be ONE single coherent screen, not multiple screens, no collage. Intentional whitespace, beautiful legible typography, thin visible directional connectors, short content.
+SCREEN NAME: “路径随发现生长”. A later moment in SAME design, a more expanded workflow view. Image 1 is original product; image 2 is approved-for-this-series style continuity reference from first screen. Maintain same design language. This is the HERO design for adaptive agent collaboration and causal evidence.
+Layout: LEFT 43% PDF reader showing page 2/5 with a small highlighted paragraph and a margin marker “来源 A”; RIGHT 57% adaptive pathway area. Right area header “评审路径” plus collapse icon. Strong status heading “正在追查一处推理依赖”. One short explanation “本步发现触发了两项检查，结果返回后再决定是否继续。”
+Under heading a compact zoomable diagram, clear thin arrow connectors and generous spacing. Horizontal top completed ancestry pill “已读取全文与提取命题” links down to completed “对照证明中的关键步骤 · 证明审阅 Agent”. From this actual node grow TWO NEW causal branches only:
+LEFT child selected with burgundy outline “核对定义是否一致” subtitle “原文理解 Agent · 正在执行”, edge label “发现定义依赖”.
+RIGHT child completed “检查引用是否支持此步” subtitle “文献核查 Agent · 已返回”, edge label “发现引用依赖”.
+From right child ONLY grows amber-outlined new action “补查引用中的前提” subtitle “文献核查 Agent · 正在执行” with thin arrow annotated “引用未覆盖全部前提”.
+Both open endpoints have no predetermined merge, just open dots; below diagram simple note “后续路径尚未决定”. No giant end-of-review node, no unrelated agents, no scheduled Lean.
+Selected left node opens an in-panel detail inspector BELOW graph separated by a fine rule (NOT another column and not nested cards), taking bottom 280px:
+small label “当前选中步骤” and close icon
+title “核对定义是否一致”
+“为何新增” text “关键推理使用了前文定义，先核对适用条件。”
+“原文位置” link “第 2 页 · 所选段落 ↗”
+“执行者” “原文理解 Agent”
+“已有依据” two compact document links “前文定义摘录” “关键步骤上下文”
+“任务记录” link “查看输入与执行记录 →”
+Dark legible text. PDF highlight and selected node share burgundy annotation marker “A”, visually demonstrating traceability, not a claimed final annotation. Add tiny “示例路径” alongside graphheader. Live feedback bottom “刚刚 · 根据引用核查结果，新增‘补查前提’步骤”. Display example reason without pretending actual paper is wrong. No conclusion verdict, no hidden reasoning stream. Elegant purposeful graph with curved orthogonal connectors and restrained warm surface.
+```
+
+## 收束并交给读者
+
+```text
+Use case: ui-mockup. Create a realistic production-quality Chinese desktop web application screen, 1600 x 1080, full app content edge to edge with no browser chrome, device mockup or presentation border. Product Lemma, mathematical paper review. This is a prospective design concept, NOT actual review evidence. Put a small visible label “交互示意 · 非真实评审结果” in top app header in dark muted text. Date anchor 2026-10-17; do not invent relative calendar dates.
+REFERENCE IMAGES: existing actual Lemma UI screenshot. Preserve the restrained academic product feel, burgundy serif Lemma wordmark and Zotero-inspired PDF reader. The supplied fixed-lane graph is the thing to REPLACE, not copy. Do NOT reproduce browser chrome/sidebar. Keep reader on LEFT, adaptive actual execution graph on RIGHT. No permanent left navigation rail.
+Visual system: warm ivory background #FAF9F7, white paper, text #28222A, readable secondary #61505B, burgundy #873749 active accent, connector #927782, muted dark green completed #40654F and amber #8A591F needs-attention. Body UI type 15-16px, node titles 17-18px, no tiny pale text. Chinese clean sans, academic paper serif. Crisp thin separators, sparse borders only for standalone graph nodes, no nested cards, no excessive shadows, no gradients, no cartoon avatars, no dashboard stats.
+Persistent app header 70px: Lemma left, shortened paper title “Bolzano–Weierstrass 定理” beside divider, right “论文库” and “上传论文”. Under header the left PDF region toolbar “目录”, page x / 5, search icon, zoom, fit, “框选批注”; graceful PDF page showing the real source title “A Short and Educational Proof of the Bolzano–Weierstrass Theorem”, authors “Faruk Aktan, Mehmet Vural” or relevant interior generic math typeset text. No invented verbatim quotations or critical accusations about this paper; all workflow finding copy is illustrative and visibly labeled as sample. Reader stays a real scholarly PDF with readable equations, large white margins. Do not label or number alternative options.
+Critical interaction: this graph grows from actual discrete executed actions and explicit next decisions. Nodes are concrete actions, agents are small metadata. No fixed stages 01-05, no mandatory three role lanes, no full agent roster, no future grand plan, no global percent, no guessed ETA. Every completed node means task completed, not theorem proved. High level decision rationale is short, not hidden internal chain of thought. Preserve human confirmation before semantic approval and separate result reveal “确定，查看结果”.
+Each result must be ONE single coherent screen, not multiple screens, no collage. Intentional whitespace, beautiful legible typography, thin visible directional connectors, short content.
+SCREEN NAME: “收束并交给读者”. Third timepoint of SAME adaptive review series. Use image2 as style continuity reference. Show task execution ended, results awaiting user's reveal confirmation. This screen illustrates flow convergence, not proving a real paper correct.
+Layout LEFT60% clean PDF reader with source title and page1/5, no AI annotations before confirmation. RIGHT40% workflow panel with strong title “本轮评审已结束”, secondary “执行路径已归档，结果等待你查看。” and top small label “评审路径 · 示例”.
+The compact graph represents ONLY historical executed steps, top to bottom:
+one completed root “阅读全文与提取命题” tiny agent “原文理解 Agent”
+down to completed action “对照证明中的关键步骤” agent “证明审阅 Agent”.
+Actual branch split with clearly directional connectors: left small completed “核对定义” agent “原文理解 Agent”; right small completed “核查引用” agent “文献核查 Agent”, right down to completed “补查前提” agent “文献核查 Agent”. Left branch continues downward with connector so both join cleanly into one actual merge node.
+Merge node “复核已收集的依据” subtitle “交叉复核 Agent · 已完成” with short outcome-neutral metadata “汇集各分支产物”.
+Downward arrow to burgundy outline final terminal action “汇总本轮评审” subtitle “协调 Agent · 已完成”. All labels are actions completed, never verified theorem symbols or green victory banners. Do NOT show future placeholders or unknown tasks after final node.
+Below final graph, a fine horizontal separator and unboxed small text “完成的是本轮核查；未解决的问题会保留在结果中。”
+Bottom sticky confirmation area: one burgundy full-width button “确定，查看结果”. Below that one short calm explanatory sentence “确认后显示「评审结论」和「批注」。”
+Secondary text action “查看完整执行记录 →”. No actual verdict, severity count, issue content or AI annotation appears prior to clicking confirmation. No score, percent, guaranteed complete paperverification. Tasks may finish without resolving every issue. Show entire graph and button within viewport, no clipped content. Clean calm sense of conclusion, clear modest type and high contrast. Do not add extra dialogs, tool drawers, side rails, agentrosters or unnecessary buttons.
+```

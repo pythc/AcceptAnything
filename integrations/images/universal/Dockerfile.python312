@@ -1,0 +1,9 @@
+ARG PYTHON_IMAGE
+FROM acceptance-universal-python:d038 AS toolchain
+FROM ${PYTHON_IMAGE}
+USER root
+RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.list.d/debian.sources && apt-get -o Acquire::Retries=3 update && apt-get -o Acquire::Retries=3 install -y --no-install-recommends build-essential pkg-config cmake git libssl-dev libsqlite3-dev libsqlite3-mod-spatialite && rm -rf /var/lib/apt/lists/*
+COPY --from=toolchain /usr/local/cargo /usr/local/cargo
+COPY --from=toolchain /usr/local/rustup /usr/local/rustup
+ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo PATH=/usr/local/cargo/bin:$PATH CARGO_BUILD_JOBS=2 PYTHONDONTWRITEBYTECODE=1 PIP_DISABLE_PIP_VERSION_CHECK=1
+RUN python --version && cc --version && cargo --version && dpkg-query -W > /native-toolchain.lock

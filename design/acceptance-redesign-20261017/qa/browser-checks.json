@@ -1,0 +1,58 @@
+{
+  "stages": [
+    {
+      "stage": "基线校验",
+      "heading": "基线校验"
+    },
+    {
+      "stage": "用例准备",
+      "heading": "用例准备"
+    },
+    {
+      "stage": "接口验证",
+      "heading": "接口验证"
+    },
+    {
+      "stage": "页面验证",
+      "heading": "页面验证"
+    },
+    {
+      "stage": "性能与恢复",
+      "heading": "性能与恢复"
+    },
+    {
+      "stage": "环境清理",
+      "heading": "环境清理"
+    },
+    {
+      "stage": "缺陷归纳",
+      "heading": "缺陷归纳"
+    },
+    {
+      "stage": "验收判定",
+      "heading": "验收判定"
+    },
+    {
+      "stage": "代码检查",
+      "heading": "代码检查"
+    }
+  ],
+  "desktop": [
+    {
+      "tab": "缺陷结论 6",
+      "documentWidth": 1487,
+      "viewport": 1487
+    },
+    {
+      "tab": "证据溯源 524",
+      "documentWidth": 1487,
+      "viewport": 1487
+    },
+    {
+      "tab": "验收流程",
+      "documentWidth": 1487,
+      "viewport": 1487
+    }
+  ],
+  "consoleErrors": []
+}

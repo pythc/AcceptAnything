@@ -1,0 +1,3 @@
+# Optional, separate stdio tool environment; the web service keeps its own lock.
+mcp==1.30.0
+httpx==0.28.1

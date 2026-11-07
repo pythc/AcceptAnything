@@ -1,0 +1,1 @@
+{"name":"protocol-loader-calibration","type":"module","main":"./dist/index.js","scripts":{"build":"node build.cjs"}}

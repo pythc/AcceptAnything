@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neutral-cli-exit-calibration"
+version = "0.1.0"
+
+[project.scripts]
+exit-protocol = "cli:main"
+
+[tool.setuptools]
+py-modules = ["cli"]

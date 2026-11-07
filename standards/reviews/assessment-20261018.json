@@ -1,0 +1,751 @@
+{
+  "version": "assessment-review-20261018-v1",
+  "created_at": "2026-10-18",
+  "purpose": "保留扫描原件，仅按精确规则/文件/行及源码摘要附加独立复核；未知命中不豁免",
+  "static_triage": "/Users/alex/.codex/state/plugins/codex-security/scans/-/artifacts-a4c83701885cb1901ded5733f774bfe8adaf809389066036e7405722223738bf/artifacts/d023-static-triage.json",
+  "entries": [
+    {
+      "rule": "generic-api-key",
+      "path": "server/src/embedding.test.ts",
+      "line": 41,
+      "source_sha256": "dd18df7d7d86b4e9671346d67f0df80e3d333835ffb6d5209c6a06fe335f3c2b",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/embedding.test.ts",
+          "lines": "41",
+          "detail": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "generic-api-key",
+      "path": "server/src/embedding.test.ts",
+      "line": 42,
+      "source_sha256": "dd18df7d7d86b4e9671346d67f0df80e3d333835ffb6d5209c6a06fe335f3c2b",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/embedding.test.ts",
+          "lines": "42",
+          "detail": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "generic-api-key",
+      "path": "server/src/embedding.test.ts",
+      "line": 58,
+      "source_sha256": "dd18df7d7d86b4e9671346d67f0df80e3d333835ffb6d5209c6a06fe335f3c2b",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/embedding.test.ts",
+          "lines": "58",
+          "detail": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "generic-api-key",
+      "path": "server/src/originAliases.test.ts",
+      "line": 34,
+      "source_sha256": "fc79724d590866f60020db0fe804574c12dfa4cdac69010d973c037f120e7146",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/originAliases.test.ts",
+          "lines": "34",
+          "detail": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "generic-api-key",
+      "path": "tests/acceptance.mjs",
+      "line": 151,
+      "source_sha256": "3a951a7b8541f5d41cf3f17cfdb082fa2598ca1514a363f92942fcd8319eeb4e",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "tests/acceptance.mjs",
+          "lines": "151",
+          "detail": "命中只存在于显式fictional/fixture测试数据和脱敏测试输入；临时schema/本地测试邮件，不是生产密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "client/src/lib/materials.ts",
+      "line": 4,
+      "source_sha256": "4a872a90b8b7657dc44f63e094c766decfff189f149fe88e9939391058382255",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "client/src/lib/materials.ts",
+          "lines": "4",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "client/src/router.ts",
+      "line": 171,
+      "source_sha256": "46416d467de892edba6c0255becc2454eeb418a6f62f9ccaf4aad9fa0b01f17b",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "client/src/router.ts",
+          "lines": "171",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "context-bridge/src/cursorExport.ts",
+      "line": 24,
+      "source_sha256": "e091a4b57f8c2e8ef64f391b7f99bccbd7abf2f106f60cab67b3663edca10016",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "context-bridge/src/cursorExport.ts",
+          "lines": "24",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "context-bridge/src/payload.ts",
+      "line": 88,
+      "source_sha256": "5717f981e44513f106b4c51f3e56af1d3d4e737e6f425cc0601d1fa3fc68a1ff",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "context-bridge/src/payload.ts",
+          "lines": "88",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.helmet_header_x_powered_by",
+      "path": "runtime.mjs",
+      "line": 12,
+      "source_sha256": "ffd9140944f99754cd07106e498e4f812f052b64b07ff5407bdee1e6a36a1023",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "runtime.mjs",
+          "lines": "12",
+          "detail": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/adminDeletion.test.ts",
+      "line": 189,
+      "source_sha256": "a3d2043d3c15681d9c1913579a9f84f5d367d9362c0a8f57d170164fbbbec5d5",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/adminDeletion.test.ts",
+          "lines": "189",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_password",
+      "path": "server/src/adminDeletion.test.ts",
+      "line": 192,
+      "source_sha256": "a3d2043d3c15681d9c1913579a9f84f5d367d9362c0a8f57d170164fbbbec5d5",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/adminDeletion.test.ts",
+          "lines": "192",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.helmet_header_x_powered_by",
+      "path": "server/src/app.ts",
+      "line": 25,
+      "source_sha256": "627f829db6dba9ad9602f9d4c4b9fc8f917cc39c6147600bb626564dcce605fe",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/app.ts",
+          "lines": "25",
+          "detail": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.helmet_header_x_powered_by",
+      "path": "server/src/app.ts",
+      "line": 38,
+      "source_sha256": "627f829db6dba9ad9602f9d4c4b9fc8f917cc39c6147600bb626564dcce605fe",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/app.ts",
+          "lines": "38",
+          "detail": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "server/src/config.ts",
+      "line": 55,
+      "source_sha256": "a66dff1910c0612ca9cab951ff8a2e66979adcb17a91fc5777309b23cc61fb61",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/config.ts",
+          "lines": "55",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/integration.test.ts",
+      "line": 197,
+      "source_sha256": "7289bc67d1a2c92291235340f4ebcd7652f7e86366c9ef95d1f52ab07e17da68",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/integration.test.ts",
+          "lines": "197",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_password",
+      "path": "server/src/integration.test.ts",
+      "line": 200,
+      "source_sha256": "7289bc67d1a2c92291235340f4ebcd7652f7e86366c9ef95d1f52ab07e17da68",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/integration.test.ts",
+          "lines": "200",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "server/src/materials.ts",
+      "line": 244,
+      "source_sha256": "0742666e6d8f983e5cac3470d797298777800e3dd0179d3f778d1fb0cdf005eb",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/materials.ts",
+          "lines": "244",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/oauth.integration.test.ts",
+      "line": 456,
+      "source_sha256": "3745bd14595f9185a27ab1b485e3caed50e7bb8b052039d8eb3338aeabc13d06",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/oauth.integration.test.ts",
+          "lines": "456",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_password",
+      "path": "server/src/oauth.integration.test.ts",
+      "line": 459,
+      "source_sha256": "3745bd14595f9185a27ab1b485e3caed50e7bb8b052039d8eb3338aeabc13d06",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/oauth.integration.test.ts",
+          "lines": "459",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "server/src/oauth.ts",
+      "line": 48,
+      "source_sha256": "6d91cc4a1ab1108d3823f5697dcbd74a8b61a8e9798c95366c68766f9a774591",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/oauth.ts",
+          "lines": "48",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.express_open_redirect",
+      "path": "server/src/oauth.ts",
+      "line": 113,
+      "source_sha256": "6d91cc4a1ab1108d3823f5697dcbd74a8b61a8e9798c95366c68766f9a774591",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "目的地来自已校验appOrigin和数据库生成UUID，外部redirectUri先校验注册白名单；该位置不是任意用户URL重定向。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/oauth.ts",
+          "lines": "113",
+          "detail": "目的地来自已校验appOrigin和数据库生成UUID，外部redirectUri先校验注册白名单；该位置不是任意用户URL重定向。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.test.ts",
+      "line": 142,
+      "source_sha256": "196543eaba5c2fd2ce71ae7493a261bcb17229a638a9ddc922904f4820c36b6d",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.test.ts",
+          "lines": "142",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_password",
+      "path": "server/src/registrationProtection.test.ts",
+      "line": 144,
+      "source_sha256": "196543eaba5c2fd2ce71ae7493a261bcb17229a638a9ddc922904f4820c36b6d",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.test.ts",
+          "lines": "144",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.helmet_header_x_powered_by",
+      "path": "server/src/registrationProtection.test.ts",
+      "line": 178,
+      "source_sha256": "196543eaba5c2fd2ce71ae7493a261bcb17229a638a9ddc922904f4820c36b6d",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.test.ts",
+          "lines": "178",
+          "detail": "规则命中移除x-powered-by的防护操作或其测试；这是正向安全配置，不能按漏洞计数。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.regex_dos",
+      "path": "server/src/registrationProtection.ts",
+      "line": 132,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "132",
+          "detail": "已逐位置核对正则及前置边界；为字符类/固定后缀/非嵌套匹配，未发现报告所称指数回溯路径。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.ts",
+      "line": 144,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "144",
+          "detail": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.ts",
+      "line": 150,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "150",
+          "detail": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.ts",
+      "line": 272,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "272",
+          "detail": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.ts",
+      "line": 273,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "273",
+          "detail": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.ts",
+      "line": 334,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "334",
+          "detail": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/registrationProtection.ts",
+      "line": 335,
+      "source_sha256": "6e6b98f4e4f0883f010ff84f2d42dbbaa4c4ebedafad37d5681474f53cef2ebc",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/registrationProtection.ts",
+          "lines": "335",
+          "detail": "实际值从运行配置密钥经HMAC/domainSecret派生；规则将带Secret名称的表达式/用途标记误判为硬编码密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_secret",
+      "path": "server/src/timing.integration.test.ts",
+      "line": 167,
+      "source_sha256": "bd8ca163501c4cc96c194fa4ed25c90c6b26dc90e886714cc7f706b28076f91f",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/timing.integration.test.ts",
+          "lines": "167",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "recipe.node_password",
+      "path": "server/src/timing.integration.test.ts",
+      "line": 170,
+      "source_sha256": "bd8ca163501c4cc96c194fa4ed25c90c6b26dc90e886714cc7f706b28076f91f",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "显式临时测试凭据，不是部署密钥。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/timing.integration.test.ts",
+          "lines": "170",
+          "detail": "显式临时测试凭据，不是部署密钥。"
+        }
+      ]
+    },
+    {
+      "rule": "B404",
+      "path": "tests/upload-helper.test.py",
+      "line": 11,
+      "source_sha256": "dc7fd037c8be3395941426259c4aeebec30c8432728b0ceb63b67fb5b8d27b80",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "仅测试辅助器导入subprocess并以固定sys.executable和HELPER组成argv；没有shell=True或产品远程命令入口。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "tests/upload-helper.test.py",
+          "lines": "11",
+          "detail": "仅测试辅助器导入subprocess并以固定sys.executable和HELPER组成argv；没有shell=True或产品远程命令入口。"
+        }
+      ]
+    },
+    {
+      "rule": "B603",
+      "path": "tests/upload-helper.test.py",
+      "line": 370,
+      "source_sha256": "dc7fd037c8be3395941426259c4aeebec30c8432728b0ceb63b67fb5b8d27b80",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "仅测试辅助器导入subprocess并以固定sys.executable和HELPER组成argv；没有shell=True或产品远程命令入口。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "tests/upload-helper.test.py",
+          "lines": "370",
+          "detail": "仅测试辅助器导入subprocess并以固定sys.executable和HELPER组成argv；没有shell=True或产品远程命令入口。"
+        }
+      ]
+    },
+    {
+      "rule": "dependency",
+      "path": "package-lock.json",
+      "line": null,
+      "source_sha256": "dfd69a2c78d9db1c1d0cb91901abb11700f15edc550bfa29b674796c38363d26",
+      "verdict": "needs_review",
+      "category": "risk",
+      "reason": "受影响锁定版本命中真实；尚不能等同已可利用产品漏洞。SDK客户端未配置authProvider，服务器不受该OAuth客户端缺陷影响；source-map-js由Vue/PostCSS工具链引入。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "受影响锁定版本命中真实；尚不能等同已可利用产品漏洞。SDK客户端未配置authProvider，服务器不受该OAuth客户端缺陷影响；source-map-js由Vue/PostCSS工具链引入。"
+        }
+      ]
+    },
+    {
+      "rule": "10055",
+      "path": "server/src/http.ts",
+      "line": 40,
+      "source_sha256": "8f694c09d99bcb433e1936523989e089ef873dcb7ea51e5a3837e1278ac30aa9",
+      "verdict": "needs_review",
+      "category": "risk",
+      "reason": "CSP确实允许https:图片源和unsafe-inline样式；防护面较宽，不是已复现的脚本注入。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "server/src/http.ts",
+          "lines": "40",
+          "detail": "CSP确实允许https:图片源和unsafe-inline样式；防护面较宽，不是已复现的脚本注入。"
+        }
+      ]
+    },
+    {
+      "rule": "CVE-2026-104850",
+      "path": "package-lock.json",
+      "line": null,
+      "source_sha256": "dfd69a2c78d9db1c1d0cb91901abb11700f15edc550bfa29b674796c38363d26",
+      "verdict": "needs_review",
+      "category": "risk",
+      "reason": "受影响锁定版本命中真实；尚不能等同已可利用产品漏洞。SDK客户端未配置authProvider，服务器不受该OAuth客户端缺陷影响；source-map-js由Vue/PostCSS工具链引入。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "受影响锁定版本命中真实；尚不能等同已可利用产品漏洞。SDK客户端未配置authProvider，服务器不受该OAuth客户端缺陷影响；source-map-js由Vue/PostCSS工具链引入。"
+        }
+      ]
+    },
+    {
+      "rule": "CVE-2026-93749",
+      "path": "package-lock.json",
+      "line": null,
+      "source_sha256": "dfd69a2c78d9db1c1d0cb91901abb11700f15edc550bfa29b674796c38363d26",
+      "verdict": "needs_review",
+      "category": "risk",
+      "reason": "受影响锁定版本命中真实；尚不能等同已可利用产品漏洞。SDK客户端未配置authProvider，服务器不受该OAuth客户端缺陷影响；source-map-js由Vue/PostCSS工具链引入。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "package-lock.json",
+          "lines": "unknown",
+          "detail": "受影响锁定版本命中真实；尚不能等同已可利用产品漏洞。SDK客户端未配置authProvider，服务器不受该OAuth客户端缺陷影响；source-map-js由Vue/PostCSS工具链引入。"
+        }
+      ]
+    },
+    {
+      "rule": "DL3066",
+      "path": "Dockerfile",
+      "line": 13,
+      "source_sha256": "b34d6555fb7725ac8ee92e74beec4d272eed97cbc8a8b98e2ce06677b0020323",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "USER node为官方基础镜像内已定义的非root用户；该规则是主机映射提示，不证明提权或启动失败。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "Dockerfile",
+          "lines": "13",
+          "detail": "USER node为官方基础镜像内已定义的非root用户；该规则是主机映射提示，不证明提权或启动失败。"
+        }
+      ]
+    },
+    {
+      "rule": "DL3025",
+      "path": "Dockerfile",
+      "line": 15,
+      "source_sha256": "b34d6555fb7725ac8ee92e74beec4d272eed97cbc8a8b98e2ce06677b0020323",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "产品CMD已为JSON数组；命中的是固定命令的HEALTHCHECK CMD shell形式，不是服务入口的信号丢失漏洞。",
+      "evidence": [
+        {
+          "label": "reported location",
+          "path": "Dockerfile",
+          "lines": "15",
+          "detail": "产品CMD已为JSON数组；命中的是固定命令的HEALTHCHECK CMD shell形式，不是服务入口的信号丢失漏洞。"
+        }
+      ]
+    },
+    {
+      "rule": "10096",
+      "path": "/generated-asset/assets/index-ZY9M6oT8.js",
+      "line": null,
+      "source_sha256": "396fea6b1d3f856d095d3e5e9491df39b94cff06aa9b8334203e4174a2f36fe8",
+      "verdict": "not_actionable",
+      "category": "false_positive",
+      "reason": "已读取原构建产物：1540483477用于字符分组后的乘法、移位和异或散列运算，是数值常量，并非时间信息。只对同一完整JS摘要及本次HTTP原件生效。",
+      "evidence": [
+        {
+          "path": "client/dist/assets/index-ZY9M6oT8.js",
+          "sha256": "396fea6b1d3f856d095d3e5e9491df39b94cff06aa9b8334203e4174a2f36fe8",
+          "context": ">=4;++n,o-=4)r=e.charCodeAt(n)&255|(e.charCodeAt(++n)&255)<<8|(e.charCodeAt(++n)&255)<<16|(e.charCodeAt(++n)&255)<<24,r=(r&65535)*1540483477+((r>>>16)*59797<<16),r^=r>>>24,t=(r&65535)*1540483477+((r>>>16)*59797<<16)^(t&65535)*1540483477+((t>>>16)*59797<<16);switch(o){case 3:t^=(e.charCodeAt(n+2)&255)<<16;case"
+        }
+      ]
+    }
+  ],
+  "test_issues": {
+    "criterion_id": "ROOT-REGRESSION",
+    "sources": {
+      "tests/oauth-migration.test.ts": "d268c1c9b209bd774b4cbc7061d96c2d664666bf2e6013e522a62a1f74c9012d",
+      "tests/review-regressions.test.ts": "55da2dc672a2bdf3a2a662040e483ad77348accfbf32f2cb6d08982e38a5cff5"
+    },
+    "names": [
+      "001 upgrade preserves data and changes only documented upload columns; startup is repeatable",
+      "Auth bootstrapping and verification attempts remain durable"
+    ],
+    "reason": "项目旧用例：迁移只预期001–004，当前文档规定005/006；注册测试未提供新注册验证前置条件。原测试保留失败，不调整其断言。"
+  },
+  "context_digest": "61002290e70c5e05545324eca6f60d031dc107a221cd67d7281b7562d8b2d8e6"
+}

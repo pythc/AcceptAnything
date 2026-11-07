@@ -1,0 +1,11 @@
+{
+  "run_id": "int-5740126cbe21420e",
+  "finding_id": "F-1114",
+  "events": 2,
+  "states": [
+    "test_issue",
+    "needs_review"
+  ],
+  "all_event_evidence_verified": true,
+  "historical_decision_unchanged": true
+}

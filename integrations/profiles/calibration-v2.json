@@ -1,0 +1,430 @@
+{
+  "id": "integration-calibration-v2",
+  "name": "多工具集成校准 · 含已知缺陷",
+  "repository": "/Users/alex/Documents/ChatGPT/竞赛/integrations/fixtures/multitool",
+  "version": "D014-v2",
+  "environment": "Linux Docker · synthetic calibration",
+  "scope": "合成输入校准扫描、报告和门禁；不代表产品缺陷",
+  "files": [
+    "api-server.cjs",
+    "api-server.py",
+    "check.robot",
+    "collection.json",
+    "iac/Dockerfile",
+    "iac/main.tf",
+    "js/arithmetic.test.mjs",
+    "js/quality.js",
+    "openapi.json",
+    "package-lock.json",
+    "package.json",
+    "py/calculator.py",
+    "py/test_calculator.py",
+    "requirements.txt",
+    "script.sh",
+    "semgrep.yaml",
+    "spectral.yaml"
+  ],
+  "tasks": [
+    {
+      "id": "bandit",
+      "tool": "bandit",
+      "target": "py",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "ruff",
+      "tool": "ruff",
+      "target": "py",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "pytest",
+      "tool": "pytest",
+      "target": "py",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "pytest-allure",
+      "tool": "pytest-allure",
+      "target": "py",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "coverage",
+      "tool": "coverage",
+      "target": "py",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "robot",
+      "tool": "robot",
+      "target": "check.robot",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "pip-audit",
+      "tool": "pip-audit",
+      "target": "requirements.txt",
+      "timeout": 240,
+      "network": "registry"
+    },
+    {
+      "id": "checkov",
+      "tool": "checkov",
+      "target": "iac",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "eslint",
+      "tool": "eslint",
+      "target": "js/quality.js",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "spectral",
+      "tool": "spectral",
+      "target": "openapi.json",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "node-test",
+      "tool": "node-test",
+      "target": "js/arithmetic.test.mjs",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "npm-audit",
+      "tool": "npm-audit",
+      "target": ".",
+      "timeout": 240,
+      "network": "registry"
+    },
+    {
+      "id": "semgrep",
+      "tool": "semgrep",
+      "target": "py",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "gitleaks",
+      "tool": "gitleaks",
+      "target": ".",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "trivy-config",
+      "tool": "trivy-config",
+      "target": "iac",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "trivy-fs",
+      "tool": "trivy-fs",
+      "target": ".",
+      "timeout": 240,
+      "network": "registry"
+    },
+    {
+      "id": "syft-cyclonedx",
+      "tool": "syft-cyclonedx",
+      "target": ".",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "syft-spdx",
+      "tool": "syft-spdx",
+      "target": ".",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "grype",
+      "tool": "grype",
+      "target": ".",
+      "timeout": 240,
+      "network": "registry"
+    },
+    {
+      "id": "hadolint",
+      "tool": "hadolint",
+      "target": "iac/Dockerfile",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "shellcheck",
+      "tool": "shellcheck",
+      "target": "script.sh",
+      "timeout": 240,
+      "network": "none"
+    },
+    {
+      "id": "newman",
+      "tool": "newman",
+      "target": "collection.json",
+      "timeout": 240,
+      "network": "none",
+      "service_script": "api-server.cjs"
+    },
+    {
+      "id": "schemathesis",
+      "tool": "schemathesis",
+      "target": "openapi.json",
+      "timeout": 240,
+      "network": "none",
+      "service_script": "api-server.py"
+    }
+  ],
+  "rules": [
+    {
+      "id": "bandit",
+      "kind": "metric",
+      "tasks": [
+        "bandit"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "ruff",
+      "kind": "metric",
+      "tasks": [
+        "ruff"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "pytest",
+      "kind": "metric",
+      "tasks": [
+        "pytest"
+      ],
+      "metric": "tests.failed",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "pytest-allure",
+      "kind": "metric",
+      "tasks": [
+        "pytest-allure"
+      ],
+      "metric": "tests.failed",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "coverage",
+      "kind": "metric",
+      "tasks": [
+        "coverage"
+      ],
+      "metric": "coverage.lines",
+      "operator": "ge",
+      "threshold": 1
+    },
+    {
+      "id": "robot",
+      "kind": "metric",
+      "tasks": [
+        "robot"
+      ],
+      "metric": "tests.failed",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "pip-audit",
+      "kind": "metric",
+      "tasks": [
+        "pip-audit"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "checkov",
+      "kind": "metric",
+      "tasks": [
+        "checkov"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "eslint",
+      "kind": "metric",
+      "tasks": [
+        "eslint"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "spectral",
+      "kind": "metric",
+      "tasks": [
+        "spectral"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "node-test",
+      "kind": "metric",
+      "tasks": [
+        "node-test"
+      ],
+      "metric": "tests.failed",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "npm-audit",
+      "kind": "metric",
+      "tasks": [
+        "npm-audit"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "semgrep",
+      "kind": "metric",
+      "tasks": [
+        "semgrep"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "gitleaks",
+      "kind": "metric",
+      "tasks": [
+        "gitleaks"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "trivy-config",
+      "kind": "metric",
+      "tasks": [
+        "trivy-config"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "trivy-fs",
+      "kind": "metric",
+      "tasks": [
+        "trivy-fs"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "syft-cyclonedx",
+      "kind": "metric",
+      "tasks": [
+        "syft-cyclonedx"
+      ],
+      "metric": "sbom.components",
+      "operator": "ge",
+      "threshold": 1
+    },
+    {
+      "id": "syft-spdx",
+      "kind": "metric",
+      "tasks": [
+        "syft-spdx"
+      ],
+      "metric": "sbom.components",
+      "operator": "ge",
+      "threshold": 1
+    },
+    {
+      "id": "grype",
+      "kind": "metric",
+      "tasks": [
+        "grype"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "hadolint",
+      "kind": "metric",
+      "tasks": [
+        "hadolint"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "shellcheck",
+      "kind": "metric",
+      "tasks": [
+        "shellcheck"
+      ],
+      "metric": "findings.total",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "newman",
+      "kind": "metric",
+      "tasks": [
+        "newman"
+      ],
+      "metric": "tests.failed",
+      "operator": "eq",
+      "threshold": 0
+    },
+    {
+      "id": "schemathesis",
+      "kind": "metric",
+      "tasks": [
+        "schemathesis"
+      ],
+      "metric": "tests.failed",
+      "operator": "eq",
+      "threshold": 0
+    }
+  ],
+  "exclusions": [
+    {
+      "subject": "真实邮箱、云账号、移动真机、商业平台",
+      "reason": "不属于本地合成校准范围"
+    }
+  ]
+}

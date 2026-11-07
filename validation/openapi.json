@@ -1,0 +1,13 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "Independent research contract", "version": "1.0.0"},
+  "paths": {
+    "/api/contract": {
+      "get": {
+        "responses": {
+          "200": {"description": "Count", "content": {"application/json": {"schema": {"type": "object", "required": ["count"], "properties": {"count": {"type": "integer", "minimum": 0}}}}}}
+        }
+      }
+    }
+  }
+}

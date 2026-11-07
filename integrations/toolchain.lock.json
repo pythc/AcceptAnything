@@ -1,0 +1,289 @@
+{
+  "gitleaks": {
+    "id": "sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f",
+    "repo_digests": [
+      "ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f"
+    ],
+    "requested_tag": "ghcr.io/gitleaks/gitleaks:latest",
+    "versions": {
+      "gitleaks": {
+        "exit_code": 0,
+        "text": "v8.30.1\n"
+      }
+    }
+  },
+  "grype": {
+    "id": "sha256:e4a44ef45d285b829ce6efe2642980329661bd2d18eab5fc539138d4adaebbbe",
+    "repo_digests": [
+      "anchore/grype@sha256:e4a44ef45d285b829ce6efe2642980329661bd2d18eab5fc539138d4adaebbbe"
+    ],
+    "requested_tag": "anchore/grype:latest",
+    "versions": {
+      "grype": {
+        "exit_code": 0,
+        "text": "Application:         grype\nVersion:             0.120.1\nBuildDate:           2026-10-06T20:41:29Z\nGitCommit:           6f8d854af29d3a3086b11a84afa51554a2a245fe\nGitDescription:      v0.120.1\nPlatform:            linux/arm64\nGoVersion:           go1.26.8\nCompiler:            gc\nSyft Version:        v1.54.1\nSupported DB Schema: 6\n"
+      }
+    }
+  },
+  "hadolint": {
+    "id": "sha256:32dac94127fd60b7b7e3fbfc65e1383b9b5e25c9bfd7b8536de7a539fe68a12d",
+    "repo_digests": [
+      "hadolint/hadolint@sha256:32dac94127fd60b7b7e3fbfc65e1383b9b5e25c9bfd7b8536de7a539fe68a12d"
+    ],
+    "requested_tag": "hadolint/hadolint:latest",
+    "versions": {
+      "hadolint": {
+        "exit_code": 0,
+        "text": "Haskell Dockerfile Linter 2.15.1\n"
+      }
+    }
+  },
+  "node": {
+    "id": "sha256:4544db1fe3409cfab3099979594afd315956ecf1385c6f0fcc9d38d99bf05a5b",
+    "repo_digests": [
+      "acceptance-node@sha256:4544db1fe3409cfab3099979594afd315956ecf1385c6f0fcc9d38d99bf05a5b"
+    ],
+    "requested_tag": "acceptance-node:d014",
+    "versions": {
+      "eslint": {
+        "exit_code": 0,
+        "text": "v10.13.0\n"
+      },
+      "newman": {
+        "exit_code": 0,
+        "text": "6.2.3\n"
+      },
+      "spectral": {
+        "exit_code": 0,
+        "text": "6.17.0\n"
+      }
+    }
+  },
+  "node-base": {
+    "id": "sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1",
+    "repo_digests": [
+      "ahs-node24@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1",
+      "node@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1"
+    ],
+    "requested_tag": "node:24-alpine",
+    "versions": {
+      "node-test": {
+        "exit_code": 0,
+        "text": "v24.21.0\n"
+      },
+      "npm-audit": {
+        "exit_code": 0,
+        "text": "11.19.0\n"
+      }
+    }
+  },
+  "python": {
+    "id": "sha256:179600379e708802ad1f97a000f6f51e635f6f8a3bdd54c77f26d583c3f1b5e2",
+    "repo_digests": [
+      "acceptance-python@sha256:179600379e708802ad1f97a000f6f51e635f6f8a3bdd54c77f26d583c3f1b5e2"
+    ],
+    "requested_tag": "acceptance-python:d014",
+    "versions": {
+      "bandit": {
+        "exit_code": 0,
+        "text": "bandit 1.9.4\n  python version = 3.11.17 (main, Oct  6 2026, 02:08:45) [GCC 14.2.0]\n"
+      },
+      "checkov": {
+        "exit_code": 0,
+        "text": "3.3.29\n"
+      },
+      "coverage": {
+        "exit_code": 0,
+        "text": "Coverage.py, version 7.16.2 with C extension\nFull documentation is at https://coverage.readthedocs.io/en/7.16.2\n"
+      },
+      "pip-audit": {
+        "exit_code": 0,
+        "text": "pip-audit 2.10.1\n"
+      },
+      "pytest": {
+        "exit_code": 0,
+        "text": "pytest 9.1.1\n"
+      },
+      "pytest-allure": {
+        "exit_code": 0,
+        "text": "pytest 9.1.1\n"
+      },
+      "robot": {
+        "exit_code": 251,
+        "text": "Robot Framework 7.5 (Python 3.11.17 on linux)\n"
+      },
+      "ruff": {
+        "exit_code": 0,
+        "text": "ruff 0.17.1\n"
+      },
+      "schemathesis": {
+        "exit_code": 0,
+        "text": "schemathesis, version 4.31.1\n"
+      }
+    }
+  },
+  "semgrep": {
+    "id": "sha256:529ee8a277ec8adc5b534d7c74eea0a47e9de21d62852b6ba7ac6ba9566845c3",
+    "repo_digests": [
+      "semgrep/semgrep@sha256:529ee8a277ec8adc5b534d7c74eea0a47e9de21d62852b6ba7ac6ba9566845c3"
+    ],
+    "requested_tag": "semgrep/semgrep:latest",
+    "versions": {
+      "semgrep": {
+        "error": "version-timeout"
+      }
+    }
+  },
+  "shellcheck": {
+    "id": "sha256:bb596a0d169b85ddd81d8b6d3a2ff6d5baf5fca10b97f575ebc647c3dff62b3d",
+    "repo_digests": [
+      "koalaman/shellcheck@sha256:bb596a0d169b85ddd81d8b6d3a2ff6d5baf5fca10b97f575ebc647c3dff62b3d"
+    ],
+    "requested_tag": "koalaman/shellcheck:stable",
+    "versions": {
+      "shellcheck": {
+        "exit_code": 0,
+        "text": "ShellCheck - shell script analysis tool\nversion: 0.11.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n"
+      }
+    }
+  },
+  "syft": {
+    "id": "sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa",
+    "repo_digests": [
+      "anchore/syft@sha256:3eb5379ba7b409c3f4069b686110527af0c47df993fa5c10d13e7cf34f49b1aa"
+    ],
+    "requested_tag": "anchore/syft:latest",
+    "versions": {
+      "syft-cyclonedx": {
+        "exit_code": 0,
+        "text": "Application:   syft\nVersion:       1.54.1\nBuildDate:     2026-10-06T15:32:19Z\nGitCommit:     b254e6d92f28c3868a755f62fb3ca8f26e9fee76\nGitDescription: v1.54.1\nPlatform:      linux/arm64\nGoVersion:     go1.26.8\nCompiler:      gc\nSchemaVersion: 16.1.11\n"
+      },
+      "syft-spdx": {
+        "exit_code": 0,
+        "text": "Application:   syft\nVersion:       1.54.1\nBuildDate:     2026-10-06T15:32:19Z\nGitCommit:     b254e6d92f28c3868a755f62fb3ca8f26e9fee76\nGitDescription: v1.54.1\nPlatform:      linux/arm64\nGoVersion:     go1.26.8\nCompiler:      gc\nSchemaVersion: 16.1.11\n"
+      }
+    }
+  },
+  "trivy": {
+    "id": "sha256:2416d1f74045b57274df1a340eee6b510cacd73c66a6ccb8da092b117eb7d222",
+    "repo_digests": [
+      "aquasec/trivy@sha256:2416d1f74045b57274df1a340eee6b510cacd73c66a6ccb8da092b117eb7d222"
+    ],
+    "requested_tag": "aquasec/trivy:latest",
+    "versions": {
+      "trivy-config": {
+        "exit_code": 0,
+        "text": "Version: 0.76.0\n"
+      },
+      "trivy-fs": {
+        "exit_code": 0,
+        "text": "Version: 0.76.0\n"
+      }
+    }
+  },
+  "gmah-api": {
+    "id": "sha256:22dd2d16e2788d071b9dcde0ec0780d48b9000e7041dd24867819f9052effc81",
+    "requested_tag": "acceptance-gmah-api:d026",
+    "recipe_sha256": "587ec5f600815c7756084358d2bdd8e3257e1796072b3c23732d1ebeb90929d8"
+  },
+  "gmah-web": {
+    "id": "sha256:7cfca0293847b5d941a42b7b900383f8e88b81e6f736c37de35009add69dd536",
+    "requested_tag": "acceptance-gmah-web:d026",
+    "recipe_sha256": "41624b2adf7b238e25366fe02b6840248363f2f7fd969776b4f17e6d1952a47c"
+  },
+  "gmah-redis": {
+    "id": "sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0",
+    "requested_tag": "redis:8-alpine"
+  },
+  "gmah-postgres": {
+    "id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "requested_tag": "postgres:17-alpine"
+  },
+  "gmah-k6": {
+    "id": "sha256:e66db15b860113878fa74670e31f5e274830b7b6e42c8bff28b2f2d86a257603",
+    "requested_tag": "grafana/k6:latest"
+  },
+  "auto-go": {
+    "id": "sha256:47a4f550354872f3673f26bda4d9257e8d6269cc2f6fbc22de1c7f3cffb86300",
+    "requested_tag": "acceptance-go:auto-v1",
+    "repo_digests": [
+      "acceptance-go@sha256:47a4f550354872f3673f26bda4d9257e8d6269cc2f6fbc22de1c7f3cffb86300"
+    ],
+    "versions": {
+      "go": "go version go1.26.9 linux/arm64\n",
+      "gotestsum": "gotestsum version v1.13.0\n"
+    }
+  },
+  "universal-python": {
+    "id": "sha256:d36129c8ac209616c6c3fa818e92d00a6abbc47cf0bc4a0a9c74baed6b60f870",
+    "requested_tag": "acceptance-universal-python:d038",
+    "repo_digests": [
+      "acceptance-universal-python@sha256:d36129c8ac209616c6c3fa818e92d00a6abbc47cf0bc4a0a9c74baed6b60f870"
+    ],
+    "versions": {
+      "python": {
+        "exit_code": 0,
+        "text": "Python 3.11.17\n"
+      },
+      "cargo": {
+        "exit_code": 0,
+        "text": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)\n"
+      },
+      "rustc": {
+        "exit_code": 0,
+        "text": "rustc 1.95.0 (59807616e 2026-04-14)\n"
+      },
+      "cc": {
+        "exit_code": 0,
+        "text": "cc (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+      }
+    }
+  },
+  "universal-node": {
+    "id": "sha256:dff4440b9ac88e02b34d55f7c6676792e54e23a7827f95c293de695746503933",
+    "requested_tag": "acceptance-universal-node:d038",
+    "repo_digests": [
+      "acceptance-universal-node@sha256:dff4440b9ac88e02b34d55f7c6676792e54e23a7827f95c293de695746503933"
+    ],
+    "versions": {
+      "node": {
+        "exit_code": 0,
+        "text": "v24.21.0\n"
+      },
+      "/opt/acceptance-loader/node_modules/.bin/tsx": {
+        "exit_code": 0,
+        "text": "tsx v4.21.0\nnode v24.21.0\n"
+      }
+    }
+  },
+  "universal-python312": {
+    "id": "sha256:a672effbd8df9f9de4b5566bfebc98377c6b4a1365032d5bf220bb87d6d8f567",
+    "requested_tag": "acceptance-universal-python:d040",
+    "repo_digests": [],
+    "versions": {
+      "python": {
+        "exit_code": 0,
+        "text": "Python 3.12.15\n"
+      },
+      "sqlite": {
+        "exit_code": 0,
+        "text": "3.46.1\n"
+      },
+      "spatialite": {
+        "exit_code": 0,
+        "text": "5.1.0\n"
+      }
+    },
+    "base_digest": "python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704"
+  },
+  "universal-redis": {
+    "id": "sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0",
+    "requested_tag": "redis:8-alpine",
+    "purpose": "通用隔离服务；按冻结声明绑定，不依赖项目配方"
+  },
+  "universal-postgres": {
+    "id": "sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24",
+    "requested_tag": "postgres:17-alpine",
+    "purpose": "通用隔离服务；按冻结声明绑定，不依赖项目配方"
+  }
+}

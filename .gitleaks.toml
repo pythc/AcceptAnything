@@ -1,0 +1,16 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Frozen review source digests are SHA-256, not credentials"
+condition = "AND"
+paths = ['(^|/)standards/reviews/assessment-20261018\.json$']
+regexTarget = "secret"
+regexes = ['^[a-f0-9]{64}$']
+
+[[allowlists]]
+description = "Exact artificial GitHub token used only in an offline leak-detection test"
+condition = "AND"
+paths = ['(^|/)validation/run_policy_and_secrets\.py$']
+regexTarget = "secret"
+regexes = ['^ghp_7M9qL2vR8xN4bT6sP1cF5hJ3wK0yD9aE8uZ2$']

@@ -1,0 +1,9 @@
+bandit==1.9.4
+ruff==0.17.1
+pip-audit==2.10.1
+pytest==9.1.1
+pytest-cov==7.1.0
+allure-pytest==2.16.2
+robotframework==7.5
+schemathesis==4.31.1
+checkov==3.3.29

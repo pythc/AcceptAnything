@@ -1,0 +1,613 @@
+{
+  "repository": "/Users/alex/Documents/Codex/2026-09-13/geng/work/110lab-assessment",
+  "include_scanners": true,
+  "documents": [
+    {
+      "id": "contract",
+      "title": "已确认产品契约",
+      "origin": "docs/CONTRACT.md",
+      "content": "# Approved requirements and integration contract\n\nChinese app: 110 实验室考核系统. Independent application alongside existing teaching service. Mature Vue 3+TypeScript+Vite+Naive UI+lucide-vue-next frontend; Express 5+TypeScript+pg+zod+nodemailer backend, PostgreSQL. Modern minimal ivory/slate/blue interface, left nav first item 招新考核. Responsive. No domain initially; IP test deployment, optional IP TLS. Parent owns root package.json, dependency install, deployment. server agent owns server/ except mcp.ts. client agent owns client/. MCP agent owns context-bridge/ and server/src/mcp.ts. All read shared contract. Do not modify peers' files; use notes to request interfaces.\n\n## Current material upload contract\n\nThe user's 2026-09-28 direct-upload requirements in [DIRECT-UPLOAD.md](DIRECT-UPLOAD.md) supersede the original approval/preview/redaction/size workflow below. Active remote tools are exam_status/test_connection/submit_materials; no per-upload website approval or model review of file bodies. Original project files upload unchanged through scoped resumable HTTP tickets, maximum1GiB aggregate. One-time explicit direct-upload consent is recorded separately for existing candidates. Keep original finalization, ownership, repository binding and deadline rules. Older v1 payload/approval records and service functions remain only for stored-data compatibility and regression tests, not the current recommended flow.\n\n## Rules\nOnly CQUPT students. Email verification; name, studentNo, college, major, phone, email, password. Unique email and studentNo per account. Login by email/studentNo + password. Admin email/password bootstrap via environment; never hardcode credentials. Email reset password. Roles CANDIDATE, ADMIN (reviewer role optional later; admin manages reviewers by assigning names if needed, don't fake access control).\nMultiple recruitment rounds (round), batches belong to round. UNIQUE(user_id,round_id) enrollment: each user chooses ONE batch and ONE direction per round. Directions PRODUCT and DEVELOPMENT_TEST only, prestart editable, locked once started. Rejoin next round allowed. No difficulty balancing. At start, choose a published question from the same batch/direction with the fewest started participants; break ties using cryptographic randomness. Count enrollments across all versions of each question, including finalized and expired attempts, excluding unstarted or deleted enrollments. The transaction holds the batch row lock before counting and assigning, so concurrent starts see committed allocations and cannot all select the same stale minimum. New unused questions receive priority until counts catch up; existing assignments never change. Question version snapshot + attachment references lock at start. Empty pool fails without starting. Don't expose question title/content/attachments before start; rules/direction counts only.\nCandidate preflight: read concrete consent policy, explicit checkbox version assessment-consent-v1; test own MCP connection before starting. Consent covers ONLY this exam project's authorized conversation files, project/user collaboration summaries, reported client/model parameters; excludes other projects, unrelated chats, credentials, hidden system/developer prompts. No covert prompt instructions. Model info can be UNKNOWN with reason, don't fabricate. Agent locates local files in approved roots, previews/redacts locally and obtains browser confirmation before sending contents. Existing files are never modified. No background wholesale history crawl.\nBatch-configured 24/48h server-authoritative started_at/deadline. Snapshot duration_hours at start; existing deadlines never change when batch duration changes. opens_at <= start time < start_closes_at only gates NEW starts. After starting, all writes, MCP/OAuth and uploads depend on the personal deadline and finalization, irrespective of batch closure. OPEN future batches allow enrollment and preparation before opens_at. start is atomic/idempotent row lock; multi-tab and reload cannot restart/reroll. Countdown serverNow offset. Both repository and MCP submissions required, matching same repo SHA/version. Candidate explicitly clicks 确认交卷; after finalization no changes, even before deadline. At deadline no further writes, existing unfinalized materials retained and labeled 已截止·未交卷 (not auto-finished). Admin extension with reason/audit allowed for unfinalized attempt, not silently reset. No interview or difficulty fairness features.\nRepository preview: HTTPS GitHub/Gitee only, safe provider APIs, reject URL credentials/IP/custom hosts/unsafe paths and redirects; don't execute/clone candidate code. Retrieve default/requested branch HEAD metadata. Store preview opaque id bound to user/attempt + SHA, branch, message, author, committedAt, expiry10min. Confirmation locks THAT preview SHA (not refetch latest). Before deadline allow new repo revision; invalidate/require rebind/reupload MCP when SHA changes. Final confirmation dialog shows exact SHA and MCP receipt. Providers inaccessible => clear error; no fake success.\nMCP data: declared client/model metadata (reported/detected/unknown), concise project/collaboration summaries, and the current client current conversation native raw logs. Recorded direct-upload consent plus a submission request permits direct upload with notice, without another approval. No conversion, filtering, trimming or reconstruction; bytes stay outside model/MCP argument context. At most20 files/1GiB via scoped resumable HTTP tickets; helper/bridge snapshots handle append-only growth. Missing native logs or permissions are real blockers, not reasons to substitute other sessions. Repository binding, deadline, token ownership and explicit website finalization remain enforced. Only admin can read/download received material; candidates see progress and receipts. Retain90days after result release (or deadline if unpublished), then purge content with audit. Legacy v1 stored payload/approvals remain compatible for historical data only. Never log bodies or tokens.\nAdmin: rounds and batches CRUD/time scheduling, question editing/publishing with attachments (upload), candidate list/filter, details with repository locked SHA and MCP materials, scoring/feedback, publish results+email notification, CSV export safe formula escaping, audit records. Attachment private authenticated downloads only after start, safe filename/content-type, 20MB limit, admin uploads. Assessment data persists PostgreSQL plus owned uploads volume. Result unpublished invisible candidate. No server execution of repo code.\n\n## API wire convention\nBase /api, JSON. Success returns data object directly, errors {message,code?}, HTTP status meaningful. UUID ids. camelCase JSON. ISO timestamps. Cookies HttpOnly session, SameSite=Lax/Strict; CSRF token from GET /api/auth/me and header X-CSRF-Token required for authenticated mutating browser requests. Verify Origin against APP_ORIGIN for cookie writes; MCP bearer routes separately scoped. All DB SQL parametrized; locks/transactions for start/confirm/finalize. Login/register/send-code throttled by DB/IP+subject; passwords scrypt (node crypto) or argon2. No unverified emails, no code in response/log. SMTP outbox durable retry. Test mail transport ONLY explicit nonproduction config.\n\nGET /api/health -> {status:'ok',database:'ok'}\nPOST /api/auth/email-code {email,purpose:'REGISTER'|'RESET'} -> {challengeId,expiresIn:600}\nPOST /api/auth/register {name,studentNo,college,major,phone,email,password,challengeId,code,acceptedPolicy:true} -> {user,csrfToken}\nPOST /api/auth/login {account,password} -> {user,csrfToken}\nGET /api/auth/me -> {user,csrfToken} or401\nPOST /api/auth/logout -> {ok:true}\nPOST /api/auth/reset-password {email,challengeId,code,password} -> {ok:true}\nUser {id,role,name,studentNo?,college?,major?,phone?,email}\nGET /api/batches -> {rounds:[{id,name,batches:[{id,name,description,status:'DRAFT'|'OPEN'|'CLOSED',opensAt,startClosesAt,durationHours:24|48,directions:['PRODUCT','DEVELOPMENT_TEST'],enrollment?}]}],serverNow}\nPOST /api/enrollments {batchId,direction} -> {enrollment}\nPATCH /api/enrollments/:id {batchId?,direction} -> {enrollment}\nGET /api/enrollments/:id -> {enrollment,serverNow}\nEnrollment {id,roundId,batchId,batchName,roundName,direction,state:'READY'|'ACTIVE'|'FINALIZED'|'EXPIRED',mcpConnected:boolean,consentAccepted:boolean,startedAt:null|ISO,deadline:null|ISO,finalizedAt:null|ISO,question:null|{title,content,attachments:[{id,name,size,url}]},repository:null|{id,url,branch,sha,message,author,committedAt,confirmedAt},materials:null|{id,sha256,repoSha,receivedAt,clientCount,fileCount,coverage},approvals:[{id,manifest,payloadHash,repoSha,state,expiresAt}],result:null|{score,feedback,publishedAt}}\nPOST /api/enrollments/:id/consent {version:'assessment-consent-v1',accepted:true} -> {enrollment}\nPOST /api/enrollments/:id/mcp-token {} -> {token,mcpUrl,expiresAt}; rotate explicit; token only returned once; revoke prior tokens. MCP URL /mcp. Tokens valid for own enrollment preflight then until deadline/finalization.\nPOST /api/enrollments/:id/start {confirmed:true,expectedDurationHours:24|48} -> {enrollment,serverNow}; require consent+mcpConnected; changed duration requires 409 DURATION_CHANGED and explicit reconfirmation.\nPOST /api/enrollments/:id/repository/preview {url,branch?} -> {preview:{id,url,branch,sha,message,author,committedAt,expiresAt}}\nPOST /api/enrollments/:id/repository/confirm {previewId} -> {enrollment}\nPOST /api/enrollments/:id/approvals/:approvalId/approve {approved:true} -> {ok:true}\nGET /api/enrollments/:id/materials -> {payload,receipt} (admin only; candidates including owner receive 403; after content purge return metadata+purged)\nPOST /api/enrollments/:id/finalize {repositoryId,materialsId,confirmed:true} -> {enrollment,receipt:{id,submittedAt,sha,materialsHash}}\nGET /api/attachments/:id -> authenticated file; associated own question already started orADMIN\nGET /api/admin/overview -> {counts:{candidates,batches,active,finalized,unreviewed},recent:[]}\nGET/POST /api/admin/rounds -> {rounds:[{id,name}]} / {round}; body{name}\nGET /api/admin/batches -> {batches:[{id,roundId,roundName,name,description,opensAt,startClosesAt,durationHours,status:'DRAFT'|'OPEN'|'CLOSED'}]}\nPOST /api/admin/batches; PATCH /api/admin/batches/:id {roundId,name,description,opensAt,startClosesAt,durationHours:24|48,status}\nGET /api/admin/questions?batchId= -> {questions:[{id,batchId,direction,title,content,published,attachments:[]}]}\nPOST /api/admin/questions; PATCH /api/admin/questions/:id {batchId,direction,title,content,published,attachmentIds:[]}\nPOST /api/admin/attachments (multipart file) -> {attachment:{id,name,size,url}}\nGET /api/admin/candidates?search=&state=&batchId= -> {candidates:[{...user,enrollments:[{...Enrollment}]}]} (paginate ifneeded stable limit100)\nGET /api/admin/enrollments/:id -> {enrollment,user,review:{score,feedback,publishedAt}|null}\nPOST /api/admin/enrollments/:id/extend {minutes,reason} -> {enrollment}\nPOST /api/admin/enrollments/:id/review {score:0..100,feedback} -> {review}; only finalized\nPOST /api/admin/enrollments/:id/publish {} -> {review}; releases result/email via outbox idempotent\nGET /api/admin/export -> CSV\nGET /api/admin/audit -> {events:[{id,actorName,action,createdAt,details}]} (redacted no conversation/rawtoken)\n\n## Backend/MCP integration boundary (must match exports)\nserver agent creates server/src/context.ts exports:\n- type AppContext { pool:pg.Pool; config:{appOrigin:string; storageDir:string; ...}; ... }\n- createContext() -> Promise<AppContext>\nserver/src/app.ts exports createApp(ctx:AppContext) -> Express application, mounts registerMcp(app,ctx) imported './mcp.js'. During development missing mcp file parent supplies placeholder once.\nserver/src/assessment.ts exports function authenticateMcp(ctx:AppContext,rawToken:string):Promise<{userId:string,enrollmentId:string}>; getMcpStatus(ctx,identity):Promise<{enrollment:Enrollment,serverNow:string}>; probeMcp(ctx,identity):Promise<{ok:true,...}>; prepareMcpMaterials(ctx,identity,input:{manifest:MaterialManifest,payloadHash:string,repoSha:string}):Promise<{approvalId,approvalUrl,expiresAt}>; submitMcpMaterials(ctx,identity,input:{approvalId:string,payload:MaterialPayload}):Promise<{receipt:{id,sha256,repoSha,receivedAt},status:string}>.\nManifest {files:[{name:string,sha256:string,bytes:number,source:string,coverage:'export'|'partial'}],clients:[{name:string,version?:string,models:[{name:string,parameters?:Record<string,string|number|boolean|null>,source:'reported'|'detected'|'unknown'}]}],projectSummary:string,collaborationSummary:string}\nPayload {schemaVersion:1,repoSha:string,manifest:MaterialManifest,files:[{name:string,content:string}]}. sha256 is canonicalJSON recursively lexicographically sorted object keys, arrayorder preserved, UTF8. Backend should export canonicalJson from server/src/security.ts; bridge independently samealgorithm tests. File sha256 hashes UTF8 content; sum bytes max10MB; no duplicate/pathlike names; payload summary<=20000 chars; files20 each<=1MB. Servers validate structure, SHA, exact manifest content match signed approval, reject obvious secret markers e.g PRIVATE KEY, sk-/ghp_/AKIA credential patterns while avoiding false detection of normal prose. Browser approve shows manifest summaries+filenames+coverage, not raw absolute local paths. All auth/deadline/final/idempotency enforcement implemented in assessment.ts by server agent.\nMCP agent only uses exported business services, never direct SQL/schema modification. Remote StreamableHTTP tools: exam_status, test_connection, submit_materials. Local stdio bridge: exam_status, test_connection, find_candidate_files, submit_files. No per-upload approval tool and no finalization tool. Discovery is metadata-only inside explicit authorized roots; workspace matching is not current-conversation identity. Use current session id/path/index metadata to select native logs. Raw bytes are copied/hashed/transferred by code. Startup/connection never initiates upload. See DIRECT-UPLOAD.md for current behavior. STDIO stdout remains protocol-only, with redacted diagnostic errors on stderr.\n\n## Acceptance\nAuth validation/expiry/one-time codes/rate limits; concurrent start onequestiononeclock; secrets/content inaccessible prestart/crossuser; expiry and multi-tab locks; one enrollment perround; questionversions immutable; repo preview locks displayed SHA and update invalidates MCP; MCP token scope, consent, websiteapproval required, payload/hash checks and idempotency; double finalize stable receipt; result privacy; CSV injection; context scanner authorizedroots/no symlink escapes/no bulkhistory/nosecrets; real API+MCP protocol tests and frontend built typechecked. Keep testcase-only adapters excluded in production. Parent integrates Docker+SMTP+realpublicrepository+browser tests before deployment.\n\n## 注册保护接口补充\n\n发注册验证码前，浏览器使用 GET `/api/auth/registration-challenge?email=...` 获取绑定邮箱与签名浏览器 Cookie 的 ALTCHA 挑战。POST `/api/auth/email-code` 在 purpose=REGISTER 时必须携带 `registrationProof`；RESET 不需要此字段。成功验证与邮件入队在同一事务中一次性完成。验证码成功校验后才进行密码哈希。\n\n运营通过 GET `/api/admin/registration-risk?ids=...` 读取当前候选人的核查信息，PATCH `/api/admin/candidates/:id/registration-risk` 使用 `RESTRICT_START`、`ALLOW_START` 或 `CLEAR_FLAG` 并填写 reason。所有操作需要管理员身份及 CSRF 令牌。注册保护额度和升级说明见 REGISTRATION-AND-TIMING.md。\n"
+    },
+    {
+      "id": "timing",
+      "title": "注册保护与考核计时",
+      "origin": "docs/REGISTRATION-AND-TIMING.md",
+      "content": "# 注册保护与考核计时\n\n## 使用方式\n\n- 运营在批次编辑中选择 24 或 48 小时。最晚开考时间只关闭新开考入口。\n- 候选人可提前报名、阅读规则和连接 MCP；到开放时间后才能开始。\n- 确认开始时，服务器保存本次时长与个人交卷截止时间。批次关闭、修改时长或修改开考窗口不会缩短已开始的考核。\n- 已开始者继续通过“继续作答”进入；仓库、MCP、上传与交卷均使用个人截止时间。材料上传成功后仍需在网页确认交卷。\n- 若运营在候选人查看确认弹窗期间改了时长，服务器拒绝旧确认，页面重新加载后需再次确认。\n- 管理员延期是独立、带原因和审计的操作。不会恢复已撤销的 MCP 凭证、已过期的上传票据或已交卷的考核。\n\n## 注册保护\n\n注册保留邮箱验证码。发码前由浏览器完成自托管 ALTCHA 安全验证，后端校验并一次性消耗结果，绑定邮箱与浏览器。验证脚本和工作线程由本站提供，不依赖外部验证码账号或 CDN。\n\n同时对邮箱、浏览器、IP 和站点注册邮件预算限流。IP 上限保留校园网多人共用出口的余量；注册防刷不与登录、找回密码或作答共用预算。验证码发送冷却由服务器执行，刷新页面或并发请求不能绕过。\n\n注册发信默认预算为滚动 1 小时 300 封、24 小时 1500 封；同一邮箱滚动 1 小时 3 封、24 小时 10 封，且两次发信至少间隔 60 秒。浏览器与 IP 另有令牌桶速率限制。所有状态的已入队注册邮件都计入发信预算，不能靠失败重试或重启绕过。\n\n可配置 `REGISTRATION_MAIL_HOURLY_BUDGET`、`REGISTRATION_MAIL_DAILY_BUDGET` 和 `REGISTRATION_QUEUE_LIMIT`（默认 200 条待发送注册邮件）。达到预算时返回 429 与 Retry-After；登录、找回密码、在考提交不使用注册预算。\n\n安全验证提高自动化批量操作成本，不证明注册者的真实身份。学号与邮箱唯一性也不能替代学籍核验；需要核验资格时，应另行导入报名名单。\n\n运营可在“候选人与评审”的“注册核查”查看异常标记、填写核查说明、限制或解除新开考。异常标记不自动封禁；限制不会中断已开始的考核。操作保留审计，清除标记不等于解除开考限制。\n\n浏览器标识可以被清除或更换，IP 也可能共享，因此只作为辅助信号。注册记录中的网络标识使用服务端密钥摘要，不保存明文 IP。\n\n## 升级与恢复\n\n1. 升级前备份本应用数据库，保存当前应用镜像与环境配置；暂停旧实例写入，避免旧代码在新结构上继续开考。\n2. 迁移 005 放开 24/48 小时并补齐历史开考时长快照；历史个人 deadline 原样保留，包括已经延期的记录。迁移 006 添加注册防刷和核查数据。\n3. API 与网页作为同一版本发布。新的开考接口必须携带 expectedDurationHours；旧网页应刷新后操作，不能默默按新时长开考。升级前已发出的注册验证码不含新的安全验证绑定，需要重新发送；登录会话、找回密码和已开始的考核不受此规则影响。\n4. 验证注册、验证码、运营编辑、开考、批次关闭后的 MCP/上传/交卷以及健康检查。生产保持 HTTPS，浏览器安全验证需要安全上下文（localhost 测试除外）。\n5. 若已创建 48 小时批次或已开始 48 小时考核，禁止直接退回仅支持 24 小时的旧代码或收窄数据库约束。应使用保留新字段和时间语义的修复版本；数据库恢复会丢失备份后的作答，不能当作无损回滚。\n6. 邮件发送预算达到上限时，只暂停新注册邮件。应先检查异常流量和队列，再调整预算，不能关闭服务端验证。\n\n## 验证范围\n\n自动化测试使用独立 PostgreSQL schema 与本地测试邮件服务器，不使用真实候选人资料。迁移验证须包含历史延期记录、重复运行和不支持时长的约束检查。24/48 小时边界通过数据库时间与已有记录调整验证，不等待真实 48 小时。\n"
+    }
+  ],
+  "specification": {
+    "title": "110lab 考核系统 · 从需求生成业务用例",
+    "scope": "时长、开考窗口、交卷材料与版本、个人截止及结束状态的前端业务判定；不代表服务端授权、数据库事务或全产品验收。",
+    "environment": {
+      "mode": "module",
+      "runtime": "node"
+    },
+    "requirements": [
+      {
+        "id": "DURATION",
+        "title": "只接受明确的24/48小时时长",
+        "source": "timing",
+        "quote": "运营在批次编辑中选择 24 或 48 小时。",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "DURATION-VALID",
+            "title": "允许的时长",
+            "dimension": "normal",
+            "engine": "module",
+            "examples": [
+              {
+                "hours": 24,
+                "expected": true
+              },
+              {
+                "hours": 48,
+                "expected": true
+              }
+            ],
+            "steps": [
+              {
+                "kind": "call",
+                "module": "client/src/lib/format.ts",
+                "function": "isDurationHours",
+                "args": [
+                  "${hours}"
+                ],
+                "assertions": [
+                  {
+                    "value": "${expected}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "DURATION-INVALID",
+            "title": "不支持或缺失的时长",
+            "dimension": "error",
+            "engine": "module",
+            "examples": [
+              {
+                "hours": 0,
+                "expected": false
+              },
+              {
+                "hours": 23,
+                "expected": false
+              },
+              {
+                "hours": 25,
+                "expected": false
+              },
+              {
+                "hours": 47,
+                "expected": false
+              },
+              {
+                "hours": 49,
+                "expected": false
+              },
+              {
+                "hours": "24",
+                "expected": false
+              },
+              {
+                "hours": null,
+                "expected": false
+              }
+            ],
+            "steps": [
+              {
+                "kind": "call",
+                "module": "client/src/lib/format.ts",
+                "function": "isDurationHours",
+                "args": [
+                  "${hours}"
+                ],
+                "assertions": [
+                  {
+                    "value": "${expected}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "WINDOW",
+        "title": "开考时间为左闭右开区间",
+        "source": "contract",
+        "quote": "opens_at <= start time < start_closes_at only gates NEW starts.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "WINDOW-BOUNDARY",
+            "title": "开放和关闭瞬间",
+            "dimension": "boundary",
+            "engine": "module",
+            "examples": [
+              {
+                "now": 999,
+                "expected": "before"
+              },
+              {
+                "now": 1000,
+                "expected": "open"
+              },
+              {
+                "now": 1001,
+                "expected": "open"
+              },
+              {
+                "now": 1999,
+                "expected": "open"
+              },
+              {
+                "now": 2000,
+                "expected": "closed"
+              },
+              {
+                "now": 2001,
+                "expected": "closed"
+              }
+            ],
+            "steps": [
+              {
+                "kind": "call",
+                "module": "client/src/lib/format.ts",
+                "function": "windowPhase",
+                "args": [
+                  "${now}",
+                  "1970-01-01T00:00:01.000Z",
+                  "1970-01-01T00:00:02.000Z"
+                ],
+                "assertions": [
+                  {
+                    "value": "${expected}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SUBMISSION",
+        "title": "材料与仓库齐全且版本一致才能交卷",
+        "source": "contract",
+        "quote": "Both repository and MCP submissions required, matching same repo SHA/version.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "SUBMISSION-TABLE",
+            "title": "材料和版本组合",
+            "dimension": "state",
+            "engine": "module",
+            "examples": [
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "expected": true
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": null
+                },
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": null
+                },
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": null,
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": null,
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  }
+                },
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": null,
+                  "materials": null
+                },
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": null,
+                  "materials": null
+                },
+                "expected": false
+              }
+            ],
+            "steps": [
+              {
+                "kind": "call",
+                "module": "client/src/lib/exam.ts",
+                "function": "canFinalize",
+                "args": [
+                  "${enrollment}",
+                  1000
+                ],
+                "assertions": [
+                  {
+                    "value": "${expected}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DEADLINE",
+        "title": "截止与结束状态禁止写入",
+        "source": "contract",
+        "quote": "At deadline no further writes, existing unfinalized materials retained and labeled 已截止·未交卷 (not auto-finished).",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "DEADLINE-TABLE",
+            "title": "状态与个人截止边界",
+            "dimension": "boundary",
+            "engine": "module",
+            "examples": [
+              {
+                "enrollment": {
+                  "state": "READY",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 1999,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "READY",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2000,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "READY",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2001,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 1999,
+                "expected": true
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2000,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "ACTIVE",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2001,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "FINALIZED",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 1999,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "FINALIZED",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2000,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "FINALIZED",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2001,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "EXPIRED",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 1999,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "EXPIRED",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2000,
+                "expected": false
+              },
+              {
+                "enrollment": {
+                  "state": "EXPIRED",
+                  "deadline": "1970-01-01T00:00:02.000Z",
+                  "finalizedAt": null,
+                  "repository": {
+                    "id": "repo",
+                    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  },
+                  "materials": {
+                    "id": "materials",
+                    "repoSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  }
+                },
+                "now": 2001,
+                "expected": false
+              }
+            ],
+            "steps": [
+              {
+                "kind": "call",
+                "module": "client/src/lib/exam.ts",
+                "function": "writesOpen",
+                "args": [
+                  "${enrollment}",
+                  "${now}"
+                ],
+                "assertions": [
+                  {
+                    "value": "${expected}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DURATION-CHANGE",
+        "title": "时长变化需要重新确认",
+        "source": "timing",
+        "quote": "若运营在候选人查看确认弹窗期间改了时长，服务器拒绝旧确认，页面重新加载后需再次确认。",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "DURATION-COMPARE",
+            "title": "已确认时长与当前时长组合",
+            "dimension": "state",
+            "engine": "module",
+            "examples": [
+              {
+                "confirmed": 24,
+                "current": 24,
+                "expected": 24
+              },
+              {
+                "confirmed": 24,
+                "current": 48,
+                "expected": null
+              },
+              {
+                "confirmed": 48,
+                "current": 24,
+                "expected": null
+              },
+              {
+                "confirmed": 48,
+                "current": 48,
+                "expected": 48
+              }
+            ],
+            "steps": [
+              {
+                "kind": "call",
+                "module": "client/src/lib/format.ts",
+                "function": "agreedDuration",
+                "args": [
+                  "${confirmed}",
+                  "${current}"
+                ],
+                "assertions": [
+                  {
+                    "value": "${expected}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "REAL-MAIL",
+        "title": "真实邮箱投递",
+        "source": "timing",
+        "quote": "注册保留邮箱验证码。",
+        "disposition": "excluded",
+        "reason": "本批只验收前端业务规则，不连接真实邮箱；邮箱验收另用测试邮件服务。",
+        "scenarios": []
+      }
+    ]
+  }
+}

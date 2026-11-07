@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neutral-hf-offline-calibration"
+version = "0.1.0"
+dependencies = ["huggingface-hub==1.33.0"]
+
+[tool.setuptools]
+py-modules = ["offline_probe"]
